@@ -1,0 +1,2 @@
+recursive-include ntnu_process_mining/static *.*
+include ntnu-process-mining.json
