@@ -1,0 +1,40 @@
+{
+  "name": "ntnu-process-mining",
+  "version": "0.1.0",
+  "description": "Enabling the use of event logs to create rich interactive process and event-flow visualisations in jupyter notebooks with a few lines of code.",
+  "author": "TDT4290 - Group 12",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/navikt/ntnu-process-mining.git"
+  },
+  "keywords": [
+    "jupyter",
+    "widgets",
+    "ipython",
+    "ipywidgets",
+    "jupyterlab-extension"
+  ],
+  "files": [
+    "lib/**/*.js",
+    "dist/*.js"
+  ],
+  "scripts": {
+    "clean": "rimraf dist/",
+    "prepublish": "webpack",
+    "build": "webpack",
+    "watch": "webpack --watch --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "webpack": "^3.5.5",
+    "rimraf": "^2.6.1"
+  },
+  "dependencies": {
+    "@jupyter-widgets/base": "^1.1 || ^2",
+    "lodash": "^4.17.4"
+  },
+  "jupyterlab": {
+    "extension": "lib/labplugin"
+  }
+}

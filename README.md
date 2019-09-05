@@ -1,13 +1,24 @@
+ntnu-process-mining
+===============================
 
+Enabling the use of event logs to create rich interactive process and event-flow visualisations in jupyter notebooks with a few lines of code.
 
-"Project name": Enabling the use of event logs to create rich interactive process and event-flow visualisations in jupyter notebooks with a few lines of code.
+Installation
+------------
 
+To install use pip:
 
-Installation: 
+    $ pip install ntnu_process_mining
+    $ jupyter nbextension enable --py --sys-prefix ntnu_process_mining
 
-pip install "pypi project name"
+To install for jupyterlab
 
-yarn add "npm project name" 
+    $ jupyter labextension install ntnu_process_mining
 
+For a development installation (requires npm),
 
-Demo: "link to github pages with notebooks (ipywidgets docs) and storybook (react component docs)"
+    $ git clone https://github.com/navikt/ntnu-process-mining.git
+    $ cd ntnu-process-mining
+    $ pip install -e .
+    $ jupyter nbextension install --py --symlink --sys-prefix ntnu_process_mining
+    $ jupyter nbextension enable --py --sys-prefix ntnu_process_mining

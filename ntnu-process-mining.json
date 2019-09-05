@@ -1,0 +1,5 @@
+{
+  "load_extensions": {
+    "ntnu-process-mining/extension": true
+  }
+}
