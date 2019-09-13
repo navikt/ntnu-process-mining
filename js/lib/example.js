@@ -29,8 +29,6 @@ var HelloModel = widgets.DOMWidgetModel.extend({
     })
 });
 
-Hola amigo;
-
 // Custom View. Renders the widget model.
 var HelloView = widgets.DOMWidgetView.extend({
     render: function() {
