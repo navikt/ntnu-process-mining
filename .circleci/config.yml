@@ -1,22 +1,19 @@
 version: 2
 jobs:
-  build:
+  eslint:
     docker:
-    - image: circleci/ruby:2.4.1
+    - image: circleci/node
     steps:
     - checkout
-    - run: echo "A first hello from me"
-  do_my_bidding:
-    docker:
-    - image: circleci/ruby:2.4.1
-    steps:
-    - checkout
-    - run: echo "I can bend this to my will"
+    - run:
+        command: |
+          cd js/
+          npm install
+          node_modules/.bin/eslint lib
 
 
 workflows:
   version: 2
-  both_jobs:
+  linting:
     jobs:
-    - build
-    - do_my_bidding
+    - eslint
