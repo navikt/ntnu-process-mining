@@ -10,10 +10,22 @@ jobs:
           cd js/
           npm install
           node_modules/.bin/eslint lib
+  black:
+    docker:
+    - image: circleci/python
+    steps:
+    - checkout
+    - run:
+        command: |
+          cd
+          sudo pip install black
+          black --check $(pwd)/
+
 
 
 workflows:
   version: 2
-  linting:
+  style_check:
     jobs:
     - eslint
+    - black
