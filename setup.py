@@ -181,5 +181,4 @@ setup_args = {
     ],
 }
 
-Hola amigo
 setup(**setup_args)
