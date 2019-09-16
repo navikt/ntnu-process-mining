@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2",
+    "d3": "^5.11.0",
     "lodash": "^4.17.4"
   },
   "jupyterlab": {
