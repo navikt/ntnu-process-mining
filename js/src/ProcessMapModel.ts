@@ -1,9 +1,9 @@
-import { WidgetModel } from '@jupyter-widgets/base';
+import { DOMWidgetModel } from '@jupyter-widgets/base';
 
-export class ProcessMapModel extends WidgetModel {
+export class ProcessMapModel extends DOMWidgetModel {
   defaults() {
     return {
-      ...WidgetModel.prototype.defaults(),
+      ...DOMWidgetModel.prototype.defaults(),
       _model_name: 'ProcessMapModel',
       _view_name: 'ProcessMap',
       _model_module: 'ntnu-process-mining',
