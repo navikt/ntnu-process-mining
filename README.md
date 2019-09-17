@@ -7,7 +7,6 @@ Enabling the use of event logs to create rich interactive process and event-flow
 To install use pip:
 
     $ pip install ntnu_process_mining
-    $ jupyter nbextension enable --py --sys-prefix ntnu_process_mining
 
 To install for jupyterlab
 
