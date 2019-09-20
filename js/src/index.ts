@@ -1,10 +1,5 @@
 export * from './ProcessMap';
 export * from './ProcessMapModel';
 
+// tslint:disable-next-line:no-var-requires
 export let version = require('../package.json').version;
-
-// if (module.hot) {
-//   module.hot.accept('./ProcessMap.ts', () => {
-//     // alert('new version');
-//   });
-// }

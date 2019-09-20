@@ -1,10 +1,10 @@
-import * as plugin from './index';
 import * as base from '@jupyter-widgets/base';
+import * as plugin from './index';
 
 module.exports = {
   id: 'ntnu-process-mining',
   requires: [base.IJupyterWidgetRegistry],
-  activate: function(app, widgets) {
+  activate: (app, widgets) => {
     widgets.registerWidget({
       name: 'ntnu-process-mining',
       version: plugin.version,

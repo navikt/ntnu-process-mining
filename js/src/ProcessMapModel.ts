@@ -1,7 +1,7 @@
 import { DOMWidgetModel } from '@jupyter-widgets/base';
 
 export class ProcessMapModel extends DOMWidgetModel {
-  defaults() {
+  public defaults() {
     return {
       ...DOMWidgetModel.prototype.defaults(),
       _model_name: 'ProcessMapModel',

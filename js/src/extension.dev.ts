@@ -9,4 +9,5 @@ if ((window as any).require) {
 }
 
 // Export the required load_ipython_extension
+// tslint:disable-next-line:no-empty
 export function load_ipython_extension() {}
