@@ -9,7 +9,7 @@ jobs:
         command: |
           cd js/
           npm install
-          node_modules/.bin/eslint lib
+          node_modules/.bin/tslint -c tslint.json "src/**/*.ts"
   black:
     docker:
     - image: circleci/python
