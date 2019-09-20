@@ -27,5 +27,5 @@ workflows:
   version: 2
   style_check:
     jobs:
-    - eslint
+    - tslint
     - black
