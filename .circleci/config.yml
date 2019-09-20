@@ -2,30 +2,28 @@ version: 2
 jobs:
   tslint:
     docker:
-    - image: circleci/node
+      - image: circleci/node
     steps:
-    - checkout
-    - run:
-        command: |
-          cd js/
-          npm install
-          node_modules/.bin/tslint -c tslint.json "src/**/*.ts"
+      - checkout
+      - run:
+          command: |
+            cd js/
+            npm install
+            npm run lint
   black:
     docker:
-    - image: circleci/python
+      - image: circleci/python
     steps:
-    - checkout
-    - run:
-        command: |
-          cd
-          sudo pip install black
-          black --check $(pwd)/
-
-
+      - checkout
+      - run:
+          command: |
+            cd
+            sudo pip install black
+            black --check $(pwd)/
 
 workflows:
   version: 2
   style_check:
     jobs:
-    - tslint
-    - black
+      - tslint
+      - black

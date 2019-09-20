@@ -24,6 +24,7 @@
     "prepublish": "npm run build",
     "build": "webpack --mode production",
     "start": "webpack --mode development --config webpack/extension.config.js --entry ./src/extension.dev.ts && webpack-dev-server --mode development --config webpack/main.config.js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

@@ -1,22 +1,21 @@
 import { DOMWidgetView } from '@jupyter-widgets/base';
 import * as d3 from 'd3';
-import { SimulationNodeDatum, SimulationLinkDatum } from 'd3';
+import { SimulationLinkDatum, SimulationNodeDatum } from 'd3';
 
-type Edge = {
+interface IEdge {
   from: string;
   to: string;
   value: number;
-};
+}
 export class ProcessMap extends DOMWidgetView {
-  svg: d3.Selection<Element, any, null, undefined>;
-  element: Element;
-  parent: any;
+  private svg: d3.Selection<Element, any, null, undefined>;
+  private element: Element;
 
-  initialize() {
+  public initialize() {
     // this.setElement(document.createElementNS(d3.namespaces.svg, 'svg'));
     this.element = document.createElementNS(d3.namespaces.svg, 'svg');
-    (<HTMLElement>this.element).style.width = '100%';
-    (<HTMLElement>this.element).style.height = '300px';
+    (this.element as HTMLElement).style.width = '100%';
+    (this.element as HTMLElement).style.height = '300px';
     this.svg = d3.select(this.element);
     this.el.appendChild(this.element);
     // this.setElement(document.createElementNS(d3.namespaces.svg, "g"));
@@ -38,30 +37,26 @@ export class ProcessMap extends DOMWidgetView {
       .style('fill', 'black');
   }
 
-  destroy() {
-    this.el.removeChild(this.element);
-  }
-
-  render() {
+  public render() {
     const graph = {
-      nodes: [],
-      links: []
+      links: [],
+      nodes: []
     };
     type NodeDatum = SimulationNodeDatum & { id: string };
     type LinkDatum = SimulationLinkDatum<NodeDatum>;
 
-    const edges: Edge[] = this.model.get('value') || [];
-    edges.forEach(function(edge) {
-      const hasSourceNode = graph.nodes.find(function(node) {
-        return node.id === edge.from;
+    const edges: IEdge[] = this.model.get('value') || [];
+    edges.forEach(edge => {
+      const hasSourceNode = graph.nodes.find(n => {
+        return n.id === edge.from;
       });
       if (!hasSourceNode) {
         graph.nodes.push({
           id: edge.from
         });
       }
-      const hasTargetNode = graph.nodes.find(function(node) {
-        return node.id === edge.to;
+      const hasTargetNode = graph.nodes.find(n => {
+        return n.id === edge.to;
       });
       if (!hasTargetNode) {
         graph.nodes.push({
@@ -88,12 +83,11 @@ export class ProcessMap extends DOMWidgetView {
       .data(graph.links)
       .enter()
       .append('line')
-      .attr('stroke', function(d) {
+      .attr('stroke', d => {
         return '#999';
       })
-      .attr('stroke-width', function(d) {
+      .attr('stroke-width', d => {
         return 3;
-        // return Math.sqrt(d.value);
       })
       .attr('marker-end', 'url(#triangle)');
 
@@ -108,7 +102,7 @@ export class ProcessMap extends DOMWidgetView {
     node
       .append('circle')
       .attr('r', 5)
-      .attr('fill', function(d) {
+      .attr('fill', d => {
         return 'red';
         // return color(d.group);
       })
@@ -125,7 +119,7 @@ export class ProcessMap extends DOMWidgetView {
 
     node
       .append('text')
-      .text(function(d) {
+      .text(d => {
         return d.id;
       })
       .attr('x', 10)
@@ -141,7 +135,7 @@ export class ProcessMap extends DOMWidgetView {
       .attr('stroke-opacity', 0)
       .attr('fill', 'blue')
       .attr('stroke', 'red')
-      .attr('id', function(d, i) {
+      .attr('id', (d, i) => {
         return 'edgepath' + i;
       })
       .style('pointer-events', 'none');
@@ -152,7 +146,7 @@ export class ProcessMap extends DOMWidgetView {
       .enter()
       .append('text')
       .attr('class', 'edgelabel')
-      .attr('id', function(d, i) {
+      .attr('id', (d, i) => {
         return 'edgelabel' + i;
       })
       .attr('dy', -4)
@@ -160,11 +154,11 @@ export class ProcessMap extends DOMWidgetView {
       .attr('fill', '#000');
     edgelabels
       .append('textPath')
-      .attr('href', function(d, i) {
+      .attr('href', (d, i) => {
         return '#edgepath' + i;
       })
       .style('pointer-events', 'none')
-      .text(function(d, i) {
+      .text((d, i) => {
         return d.value;
       });
 
@@ -173,7 +167,7 @@ export class ProcessMap extends DOMWidgetView {
         'link',
         d3
           .forceLink<NodeDatum, LinkDatum>()
-          .id(function(d) {
+          .id(d => {
             return d.id;
           })
           .links(graph.links)
@@ -184,21 +178,21 @@ export class ProcessMap extends DOMWidgetView {
 
     function ticked() {
       link
-        .attr('x1', function(d) {
+        .attr('x1', d => {
           return d.source.x;
         })
-        .attr('y1', function(d) {
+        .attr('y1', d => {
           return d.source.y;
         })
-        .attr('x2', function(d) {
+        .attr('x2', d => {
           return d.target.x;
         })
-        .attr('y2', function(d) {
+        .attr('y2', d => {
           return d.target.y;
         });
 
-      edgepaths.attr('d', function(d) {
-        var path =
+      edgepaths.attr('d', d => {
+        const path =
           'M ' +
           d.source.x +
           ' ' +
@@ -209,7 +203,7 @@ export class ProcessMap extends DOMWidgetView {
           d.target.y;
         return path;
       });
-      edgelabels.attr('transform', function(d, i) {
+      edgelabels.attr('transform', (d, i) => {
         if (d.target.x < d.source.x) {
           const bbox = this.getBBox();
           const rx = bbox.x + bbox.width / 2;
@@ -219,7 +213,7 @@ export class ProcessMap extends DOMWidgetView {
           return 'rotate(0)';
         }
       });
-      edgelabels.attr('x', function(d, i) {
+      edgelabels.attr('x', (d, i) => {
         const bbox = this.getBBox();
         // TODO: text width calculation is wrong
         const textWidth = Math.max(bbox.width, bbox.height);
@@ -228,17 +222,9 @@ export class ProcessMap extends DOMWidgetView {
             Math.pow(d.target.y - d.source.y, 2)
         );
         return lineLength / 2 - textWidth / 2;
-        if (d.target.x < d.source.x) {
-          const bbox = this.getBBox();
-          const rx = bbox.x + bbox.width / 2;
-          const ry = bbox.y + bbox.height / 2;
-          return 'rotate(180 ' + rx + ' ' + ry + ')';
-        } else {
-          return 'rotate(0)';
-        }
       });
 
-      node.attr('transform', function(d) {
+      node.attr('transform', d => {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
     }
