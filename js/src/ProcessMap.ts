@@ -2,11 +2,11 @@ import { DOMWidgetView } from '@jupyter-widgets/base';
 import cytoscape from 'cytoscape';
 import _ from 'underscore';
 
-// interface IEdge {
-//   from: string;
-//   to: string;
-//   value: number;
-// }
+interface IEdge {
+  from: string;
+  to: string;
+  value: number;
+}
 
 export class ProcessMap extends DOMWidgetView {
   private cy: cytoscape.Core;
@@ -29,6 +29,13 @@ export class ProcessMap extends DOMWidgetView {
     }
   }
   public render_cy() {
+    const edges: IEdge[] = this.model.get('value') || [];
+    console.log(edges);
+
+    edges.forEach(edge => {
+      console.log(edge);
+    });
+
     this.element.innerHTML = '';
     this.cy = cytoscape({
       container: this.element,
