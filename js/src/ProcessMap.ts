@@ -11,21 +11,36 @@ interface IEdge {
 export class ProcessMap extends DOMWidgetView {
   private cy: cytoscape.Core;
   private element: HTMLElement;
+  private slider: HTMLInputElement;
 
   public initialize() {
     this.element = document.createElement('div') as HTMLElement;
     this.element.id = '123';
     this.element.style.width = '100%';
-    this.element.style.height = '600px';
+    this.element.style.height = '400px';
     this.element.style.border = '1px solid black';
+    this.slider = document.createElement("input");
+    let output = document.createElement("div");
+    this.slider.type="range";
+    this.slider.id="myRange";
+    this.slider.step="10";
+    this.slider.oninput = ()=> {
+      output.innerHTML = this.slider.value;
+      setTimeout(this.render_cy.bind(this), 10);
+    }
+    this.el.appendChild(this.slider);
+    this.el.appendChild(output);
     this.el.appendChild(this.element);
   }
+
+  
 
   public render() {
     console.log(this.element);
     if (!this.cy) {
       this.element.innerHTML = 'Loading...';
       setTimeout(this.render_cy.bind(this), 10);
+      
     }
   }
   public render_cy() {
@@ -35,9 +50,15 @@ export class ProcessMap extends DOMWidgetView {
     let edgelist = [];
     let nodelist = [];
     let nodenames = [];
+    let value_array = Object.keys(edges).map(function (key) {return edges[key]["value"];});
+    console.log(this.slider.value)
     edges.forEach(edge => {
-      edgelist.push({data: { id: edge.from + edge.to, source: edge.from, target: edge.to} })
-      
+      if (edge.value<=Number(this.slider.value)*Math.max.apply(null, value_array)/100){
+        return
+      }
+      if (edge.from!=edge.to){
+        edgelist.push({data: { id: edge.from + edge.to, source: edge.from, target: edge.to, label:edge.value} })
+      }
       if (!nodenames.includes(edge.from)){
         nodelist.push({data: { id: edge.from}})
         nodenames.push(edge.from)
@@ -70,9 +91,11 @@ export class ProcessMap extends DOMWidgetView {
           selector: 'edge',
           style: {
             width: 3,
-            'line-color': '#ccc',
-            'target-arrow-color': '#ccc',
-            'target-arrow-shape': 'triangle'
+            label: 'data(label)',
+            'line-color': '#f77f00',
+            'target-arrow-color': '#f77f00',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier'
           }
         }
       ],
@@ -83,18 +106,21 @@ export class ProcessMap extends DOMWidgetView {
         nodeOverlap: 20,
         refresh: 20,
         fit: true,
-        padding: 30,
+        padding: 3,
         randomize: false,
         componentSpacing: 100,
         nodeRepulsion: ()=>400000,
         edgeElasticity: ()=>100,
         nestingFactor: 5,
-        gravity: 80,
+        gravity: -800,
         numIter: 1000,
         initialTemp: 200,
         coolingFactor: 0.95,
-        minTemp: 1.0
+        minTemp: 1.0,
+        
+        
       }
-    });
+    })
+    
   }
 }
