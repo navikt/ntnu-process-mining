@@ -16,7 +16,7 @@ export class ProcessMap extends DOMWidgetView {
     this.element = document.createElement('div') as HTMLElement;
     this.element.id = '123';
     this.element.style.width = '100%';
-    this.element.style.height = '300px';
+    this.element.style.height = '600px';
     this.element.style.border = '1px solid black';
     this.el.appendChild(this.element);
   }
@@ -32,28 +32,29 @@ export class ProcessMap extends DOMWidgetView {
     const edges: IEdge[] = this.model.get('value') || [];
     console.log(edges);
 
+    let edgelist = [];
+    let nodelist = [];
+    let nodenames = [];
     edges.forEach(edge => {
-      console.log(edge);
+      edgelist.push({data: { id: edge.from + edge.to, source: edge.from, target: edge.to} })
+      
+      if (!nodenames.includes(edge.from)){
+        nodelist.push({data: { id: edge.from}})
+        nodenames.push(edge.from)
+      }
+      if (!nodenames.includes(edge.to)){
+        nodelist.push({data: { id: edge.to}})
+        nodenames.push(edge.to)
+      }
+      
     });
+    console.log(nodelist)
+    console.log(edgelist)
 
     this.element.innerHTML = '';
     this.cy = cytoscape({
       container: this.element,
-      elements: [
-        // list of graph elements to start with
-        {
-          // node a
-          data: { id: 'a' }
-        },
-        {
-          // node b
-          data: { id: 'b' }
-        },
-        {
-          // edge ab
-          data: { id: 'ab', source: 'a', target: 'b' }
-        }
-      ],
+      elements: nodelist.concat(edgelist),
 
       style: [
         // the stylesheet for the graph
@@ -77,8 +78,22 @@ export class ProcessMap extends DOMWidgetView {
       ],
 
       layout: {
-        name: 'grid',
-        rows: 1
+        name: 'cose',
+        idealEdgeLength: ()=>100,
+        nodeOverlap: 20,
+        refresh: 20,
+        fit: true,
+        padding: 30,
+        randomize: false,
+        componentSpacing: 100,
+        nodeRepulsion: ()=>400000,
+        edgeElasticity: ()=>100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0
       }
     });
   }
