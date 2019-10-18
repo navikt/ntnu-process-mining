@@ -1,5 +1,5 @@
 import ipywidgets as widgets
-from traitlets import Unicode, List, Dict
+from traitlets import Unicode, List, Dict, Int
 
 
 @widgets.register
@@ -15,3 +15,4 @@ class ProcessMap(widgets.DOMWidget):
     value = List(Dict, default_value=[{"from": "b", "to": "a", "value": 99}]).tag(
         sync=True
     )
+    filter = Int(default_value=1).tag(sync=True)
