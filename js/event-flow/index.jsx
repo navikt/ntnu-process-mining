@@ -1,41 +1,25 @@
-/*
- * Iterates over folders in the current directory and renders stories for each example
- * exported by that folder.
- * Example exports should have the following shape:
- *  {
- *    usage: {String},
- *    examples: [
- *      {
- *        description: {String} name of the story
- *        components: {Array<{func}>} array of component funcs for which proptables will be shown
- *        example: {func} () => story,
- *        usage: {String}, overrides top-level usage if passed
- *        useHOC: {Boolean} if true and a component is an HOC,
- *                will not break through to underlying wrapped component for prop tables + source
- *      }
- *    ],
- *  }
- */
-// import path from 'path';
-import { storiesOf } from '@storybook/react';
-// import GoogleAnalyticsDecorator from '../storybook-config/components/GoogleAnalytics';
+import React from 'react';
+import { withScreenSize } from '@vx/responsive';
+import ReactDOM from 'react-dom';
+import { App } from '@data-ui/event-flow';
+import twentyUsers from './SampleEventGenerator'
 
-const requireContext = require.context('./', /* subdirs= */ true, /index\.jsx?$/);
+console.log(twentyUsers.twentyUsers.allEvents);
 
-const packageExport = requireContext("./test/index.jsx");
-//const packageExport = require.context('/06-event-flow/index.jsx');
-console.log(packageExport);
-const { examples, usage } = packageExport.default;
-let name = 'event-flow';
-const stories = storiesOf(name, module);
+const ResponsiveVis = withScreenSize(({ screenWidth, screenHeight, ...rest }) => (
+    <App width={screenWidth * 0.9} height={screenHeight * 0.9} {...rest} />
+));
 
-examples.forEach(example => {
-    stories.addWithInfo({
-        kind: name,
-        story: example.description,
-        storyFn: example.example,
-        components: example.components,
-        usage: example.usage || usage,
-        useHOC: example.useHOC,
-    });
-});
+// Example of event flow:
+const EventFlowExample= () => {
+    return(
+        <div className={'content'}>
+            <h1>Event-flow example: 20/100/lots of users</h1>
+            // use: to get n users:   twentyUsers.nUsers.allEvents. See SampleEventGenerator for different numbers :D
+            <ResponsiveVis data={twentyUsers.hundredUsers.allEvents} />
+        </div>
+    )
+};
+
+// example of rendering the app:
+ReactDOM.render(<EventFlowExample/>, document.querySelector('#root'));
