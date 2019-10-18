@@ -1,13 +1,10 @@
-import os
 from pandas import read_csv
 import pandas as pd
 from collections import OrderedDict
 
 
-def _read_event_log():
-    log = read_csv(
-        os.path.join("notebooks", "work", "files", "input_data", "sepsis.csv")
-    )
+def read_event_log(path):
+    log = read_csv(path)
     log["timestamp"] = pd.to_datetime(log.timestamp)
     return log
 
@@ -16,6 +13,7 @@ def convert_to_traces(event_log, apply_filter=False):
     # TODO: Cleanup
     # TODO: Remove hardcoded column names
     # TODO: Test if this works for all cases
+    # TODO: Include more statistics like "total time used" in output
     event_log = event_log.groupby("case_id", group_keys=False).apply(
         lambda x: x.sort_values(("timestamp"))
     )
