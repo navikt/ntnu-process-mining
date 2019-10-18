@@ -1,6 +1,9 @@
 import { DOMWidgetView } from '@jupyter-widgets/base';
 import cytoscape from 'cytoscape';
+import cola from 'cytoscape-cola';
 import _ from 'underscore';
+
+cytoscape.use(cola);
 
 interface IEdge {
   from: string;
@@ -24,8 +27,8 @@ export class ProcessMap extends DOMWidgetView {
     this.slider = document.createElement('input');
     const output = document.createElement('div');
     this.slider.type = 'range';
-    // this.slider.id = 'myRange';
-    this.slider.step = '10';
+    this.slider.step = '1';
+    this.slider.value = '50';
     this.slider.oninput = () => {
       output.innerHTML = this.slider.value;
       const newValue = parseInt(this.slider.value, 10);
@@ -100,7 +103,7 @@ export class ProcessMap extends DOMWidgetView {
 
   private getLayout() {
     return {
-      name: 'cose',
+      name: 'cola',
       idealEdgeLength: () => 100,
       nodeOverlap: 20,
       refresh: 20,

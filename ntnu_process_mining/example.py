@@ -15,4 +15,4 @@ class ProcessMap(widgets.DOMWidget):
     value = List(Dict, default_value=[{"from": "b", "to": "a", "value": 99}]).tag(
         sync=True
     )
-    filter = Int(default_value=1).tag(sync=True)
+    filter = Int(default_value=50).tag(sync=True)

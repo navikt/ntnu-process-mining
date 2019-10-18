@@ -45,6 +45,7 @@
     "@types/cytoscape": "^3.8.2",
     "@types/node": "^12.7.5",
     "cytoscape": "^3.11.0",
+    "cytoscape-cola": "^2.3.0",
     "d3": "^5.11.0",
     "lodash": "^4.17.4"
   },
