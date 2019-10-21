@@ -42,13 +42,15 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
+    "@data-ui/event-flow": "0.0.81",
     "@jupyter-widgets/base": "^2.0.0",
     "@types/node": "^12.7.5",
+    "@types/react-dom": "^16.9.2",
+    "@vx/responsive": "0.0.192",
     "d3": "^5.11.0",
     "lodash": "^4.17.4",
-    "@data-ui/event-flow": "latest",
-    "@vx/responsive": "latest",
-    "react": "latest"
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   },
   "jupyterlab": {
     "extension": "lib/labplugin"

@@ -15,3 +15,12 @@ class ProcessMap(widgets.DOMWidget):
     value = List(Dict, default_value=[{"from": "b", "to": "a", "value": 99}]).tag(
         sync=True
     )
+
+
+@widgets.register
+class ReactWidget(widgets.Widget):
+    _model_module = Unicode('ntnu-process-mining').tag(sync=True)
+    _view_module = Unicode('ntnu-process-mining').tag(sync=True)
+
+    _view_name = Unicode('ReactWidget').tag(sync=True)
+    _model_name = Unicode('ReactWidgetModel').tag(sync=True)

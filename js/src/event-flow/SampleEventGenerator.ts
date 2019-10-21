@@ -1,11 +1,17 @@
-
 function intBetween(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
 // dummy events:
-const eventEx = ['Register', 'Examination', 'Wait', 'Surgery', 'Approval', 'Leave'];
-//const eventNames = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const eventEx = [
+  'Register',
+  'Examination',
+  'Wait',
+  'Surgery',
+  'Approval',
+  'Leave'
+];
+// const eventNames = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const startDate = Number(new Date('2017-01-05'));
 
 export function generateEvents({
@@ -15,26 +21,28 @@ export function generateEvents({
   maxEvents = 20,
   minElapsedMs = 5000,
   maxElapsedMs = 1000 * 60 * 60 * 24, // 1 day
-  eventNameLength = 10,
+  eventNameLength = 10
 }) {
   const nEvents = intBetween(minEvents, maxEvents);
   const events = [];
   let currDate = startDate;
   for (let i = 0; i < nEvents; i += 1) {
     const elapsedMs = intBetween(minElapsedMs, maxElapsedMs);
-    const eventIndex = intBetween(
-      0,
-      Math.random() < 0.7 ? eventCardinality - intBetween(1, eventCardinality) : eventCardinality,
-    );
-    //const event = eventNames.slice(eventIndex, eventIndex + eventNameLength);
-    const event = eventEx[intBetween(0,5)];
+    // const eventIndex = intBetween(
+    //   0,
+    //   Math.random() < 0.7
+    //     ? eventCardinality - intBetween(1, eventCardinality)
+    //     : eventCardinality
+    // );
+    // const event = eventNames.slice(eventIndex, eventIndex + eventNameLength);
+    const event = eventEx[intBetween(0, 5)];
 
     currDate += elapsedMs;
 
     events.push({
       ['ENTITY_ID']: user,
       ['TS']: new Date(currDate),
-      ['EVENT_NAME']: event,
+      ['EVENT_NAME']: event
     });
   }
 
@@ -47,7 +55,7 @@ export function generateEventsForUsers({
   maxEvents = 10,
   minElapsedMs = 1000 * 60,
   maxElapsedMs = 1000 * 60 * 60 * 24, // 1 day
-  eventCardinality = 5,
+  eventCardinality = 5
 }) {
   let allEvents = [];
   const userEvents = {};
@@ -62,7 +70,7 @@ export function generateEventsForUsers({
       maxEvents,
       minElapsedMs,
       maxElapsedMs,
-      eventCardinality,
+      eventCardinality
     });
 
     userEvents[user] = events;
@@ -78,12 +86,12 @@ export default {
   hundredUsers: generateEventsForUsers({ nUsers: 100 }),
   variableLength: generateEventsForUsers({
     nUsers: 50,
-    maxElapsedMs: 5 * 1000 * 60 * 60 * 24,
+    maxElapsedMs: 5 * 1000 * 60 * 60 * 24
   }),
   manyEvents: generateEventsForUsers({
     nUsers: 50,
     minEvents: 10,
-    maxEvents: 30,
+    maxEvents: 30
   }),
-  manyEventTypes: generateEventsForUsers({ nUsers: 50, eventCardinality: 15 }),
+  manyEventTypes: generateEventsForUsers({ nUsers: 50, eventCardinality: 15 })
 };
