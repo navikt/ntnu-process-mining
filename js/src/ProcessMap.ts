@@ -51,7 +51,7 @@ export class ProcessMap extends DOMWidgetView {
       this.cy.elements().remove();
       this.cy.add(this.getElements());
       const layout = this.cy.layout(this.getLayout());
-
+      this.setSourceAndSink();
       layout.run();
     }
   }
@@ -98,7 +98,10 @@ export class ProcessMap extends DOMWidgetView {
       ],
 
       layout: this.getLayout()
+
+      
     });
+    
   }
 
   private getLayout() {
@@ -165,5 +168,10 @@ export class ProcessMap extends DOMWidgetView {
       }
     });
     return nodelist.concat(edgelist);
+  }
+
+  private setSourceAndSink() {
+    let source_node = this.cy.getElementById('SOURCE')
+    source_node.id=()=>"GFSLGLK";
   }
 }
