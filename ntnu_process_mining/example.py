@@ -18,9 +18,9 @@ class ProcessMap(widgets.DOMWidget):
 
 
 @widgets.register
-class ReactWidget(widgets.Widget):
+class EventFlow(widgets.Widget):
     _model_module = Unicode('ntnu-process-mining').tag(sync=True)
     _view_module = Unicode('ntnu-process-mining').tag(sync=True)
 
-    _view_name = Unicode('ReactWidget').tag(sync=True)
-    _model_name = Unicode('ReactWidgetModel').tag(sync=True)
+    _view_name = Unicode('EventFlow').tag(sync=True)
+    _model_name = Unicode('EventFlowModel').tag(sync=True)

@@ -1,11 +1,11 @@
 import { DOMWidgetModel } from '@jupyter-widgets/base';
 
-export class ReactWidgetModel extends DOMWidgetModel {
+export class EventFlowModel extends DOMWidgetModel {
   public defaults() {
     return {
       ...DOMWidgetModel.prototype.defaults(),
-      _model_name: 'ReactWidgetModel',
-      _view_name: 'ReactWidget',
+      _model_name: 'EventFlowModel',
+      _view_name: 'EventFlow',
       _model_module: 'ntnu-process-mining',
       _view_module: 'ntnu-process-mining',
       _model_module_version: '0.1.0',

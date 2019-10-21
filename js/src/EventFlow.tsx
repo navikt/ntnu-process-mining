@@ -3,7 +3,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { EventFlowExample } from './event-flow';
 
-export class ReactWidget extends DOMWidgetView {
+export class EventFlow extends DOMWidgetView {
   private element: HTMLElement;
 
   public initialize() {
