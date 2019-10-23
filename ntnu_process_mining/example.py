@@ -19,8 +19,12 @@ class ProcessMap(widgets.DOMWidget):
 
 @widgets.register
 class EventFlow(widgets.Widget):
+    """Event flow widget."""
+
     _model_module = Unicode('ntnu-process-mining').tag(sync=True)
     _view_module = Unicode('ntnu-process-mining').tag(sync=True)
-
     _view_name = Unicode('EventFlow').tag(sync=True)
     _model_name = Unicode('EventFlowModel').tag(sync=True)
+    _view_module_version = Unicode("^0.1.0").tag(sync=True)
+    _model_module_version = Unicode("^0.1.0").tag(sync=True)
+    value = List(Dict, default_value=[]).tag(sync=True)

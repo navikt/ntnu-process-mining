@@ -14,9 +14,16 @@ export class EventFlow extends DOMWidgetView {
     // ReactDOM.render(<EventFlowExample/>, document.querySelector('#root'));
     this.element = document.createElement('div') as HTMLElement;
     this.element.style.width = '100%';
-    this.element.style.height = '600px';
+    this.element.style.height = '700px';
     this.el.appendChild(this.element);
+
+    const events = this.model.get('value').map(event => {
+      return {
+        ...event,
+        TS: new Date(event.TS)
+      };
+    });
     // ReactDOM.render(<MyComponent />, this.element);
-    ReactDOM.render(<EventFlowExample />, this.element);
+    ReactDOM.render(<EventFlowExample data={events} />, this.element);
   }
 }
