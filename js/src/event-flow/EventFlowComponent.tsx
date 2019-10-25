@@ -1,6 +1,6 @@
-import { App } from '@data-ui/event-flow';
-import { withScreenSize } from '@vx/responsive';
 import React, { useCallback } from 'react';
+import { default as App } from './App';
+import { withScreenSize } from '@vx/responsive';
 
 const ResponsiveVis = withScreenSize(({ screenWidth, theRef, ...rest }) => (
   <App

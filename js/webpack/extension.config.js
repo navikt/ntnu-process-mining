@@ -21,10 +21,22 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules\/(?!(@data-ui)\/).*/,
+        use: [
+          {
+        loader: "@babel/loader",
+        options: {
+        presets: ['@babel/react']
+          }
+          }
+        ],
       }
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js', '.jsx']
   }
 };
