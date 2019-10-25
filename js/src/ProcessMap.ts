@@ -15,6 +15,7 @@ export class ProcessMap extends DOMWidgetView {
   private cy: cytoscape.Core;
   private element: HTMLElement;
   private slider: HTMLInputElement;
+  private radioDiv: HTMLElement;
 
   public initialize() {
     this.element = document.createElement('div') as HTMLElement;
@@ -26,6 +27,7 @@ export class ProcessMap extends DOMWidgetView {
     ////
     this.slider = document.createElement('input');
     const output = document.createElement('div');
+    this.create_radiobtns();
     this.slider.type = 'range';
     this.slider.step = '1';
     this.slider.value = '50';
@@ -35,7 +37,9 @@ export class ProcessMap extends DOMWidgetView {
       this.model.set('filter', newValue);
       this.model.save_changes();
     };
+    
     this.el.appendChild(this.slider);
+    this.el.appendChild(this.radioDiv)
     this.el.appendChild(output);
     ////
 
@@ -43,6 +47,40 @@ export class ProcessMap extends DOMWidgetView {
     this.model.on('change:value', this.value_changed, this);
     this.model.on('change:filter', this.filter_changed, this);
   }
+  public radio_click(thisRadio: MouseEvent) {
+    console.log((<HTMLInputElement>event.target).value)
+    //let stringStylesheet = 'node { label: data(id); }';
+    this.cy.style('asdf');
+
+    //this.cy.style()
+    //.selector('node')
+    //.style({
+    //  'background-color': 'yellow'
+    //})
+    //
+    //.update() // indicate the end of your new stylesheet so that it can be updated on elements
+;
+
+  }
+  public create_radiobtns() {
+    this.radioDiv = document.createElement('div');
+    const radio1: HTMLInputElement = document.createElement('input');
+    radio1.setAttribute("type", "radio");
+    radio1.setAttribute("name", "edge_value");
+    radio1.setAttribute("value", "case");
+    radio1.addEventListener("click", this.radio_click.bind(this));
+    radio1.setAttribute("checked", "True");
+    const radio2: HTMLInputElement = document.createElement('input');
+    radio2.setAttribute("type", "radio");
+    radio2.setAttribute("name", "edge_value");
+    radio2.setAttribute("value", "absolute");
+    radio2.addEventListener("click", this.radio_click.bind(this));
+    this.radioDiv.appendChild(radio1);
+    this.radioDiv.insertAdjacentHTML("beforeend", "Case")
+    this.radioDiv.appendChild(radio2);
+    this.radioDiv.insertAdjacentHTML("beforeend", "Absolute Case")
+  }
+  
 
   public value_changed() {
     console.log('value_changed');
@@ -51,7 +89,7 @@ export class ProcessMap extends DOMWidgetView {
       this.cy.elements().remove();
       this.cy.add(this.getElements());
       const layout = this.cy.layout(this.getLayout());
-      this.setSourceAndSink();
+      //this.setSourceAndSink();
       layout.run();
     }
   }
@@ -78,6 +116,14 @@ export class ProcessMap extends DOMWidgetView {
         // the stylesheet for the graph
         {
           selector: 'node',
+          style: {
+            'background-color': '#666',
+            label: 'data(id)'
+          }
+        },
+
+        {
+          selector: 'asdf',
           style: {
             'background-color': '#666',
             label: 'data(id)'
@@ -170,8 +216,8 @@ export class ProcessMap extends DOMWidgetView {
     return nodelist.concat(edgelist);
   }
 
-  private setSourceAndSink() {
+  /* private setSourceAndSink() {
     let source_node = this.cy.getElementById('SOURCE')
     source_node.id=()=>"GFSLGLK";
-  }
+  } */
 }
