@@ -9,6 +9,7 @@ interface IEdge {
   from: string;
   to: string;
   value: number;
+  perf: number;
 }
 
 export class ProcessMap extends DOMWidgetView {
@@ -48,17 +49,46 @@ export class ProcessMap extends DOMWidgetView {
     this.model.on('change:filter', this.filter_changed, this);
   }
   public radio_click(thisRadio: MouseEvent) {
-    console.log((<HTMLInputElement>event.target).value)
-    //let stringStylesheet = 'node { label: data(id); }';
-    this.cy.style('asdf');
+    let state = (<HTMLInputElement>event.target).value
+    let new_label
+    switch(state) {
+      case 'freq':
+        new_label = 'data(freq)'
+        break;
+      case 'perf':
+        new_label = 'data(perf)'
+    }
+    console.log(new_label)
 
-    //this.cy.style()
-    //.selector('node')
-    //.style({
-    //  'background-color': 'yellow'
-    //})
-    //
-    //.update() // indicate the end of your new stylesheet so that it can be updated on elements
+    //let stringStylesheet = 'node { label: ' + 'asdf' + '; }';
+    /*this.cy.style([
+      // the stylesheet for the graph
+      {
+        selector: 'node',
+        style: {
+          'background-color': '#FF1',
+          label: 'data(id)'
+        }
+      },
+      {
+        selector: 'edge',
+        style: {
+          label: 'data(label)',
+          width: 3,
+          'line-color': '#f77f00',
+          'target-arrow-color': '#f77f00',
+          'target-arrow-shape': 'triangle',
+          'curve-style': 'bezier'
+        }
+      }
+    ]);*/
+// @ts-ignore
+    this.cy.style().selector('edge')
+    .style({
+      'background-color': 'red',
+      'label': new_label
+    })
+    .update() // indicate the end of your new stylesheet so that it can be updated on elements
 ;
 
   }
@@ -67,18 +97,18 @@ export class ProcessMap extends DOMWidgetView {
     const radio1: HTMLInputElement = document.createElement('input');
     radio1.setAttribute("type", "radio");
     radio1.setAttribute("name", "edge_value");
-    radio1.setAttribute("value", "case");
+    radio1.setAttribute("value", "freq");
     radio1.addEventListener("click", this.radio_click.bind(this));
     radio1.setAttribute("checked", "True");
     const radio2: HTMLInputElement = document.createElement('input');
     radio2.setAttribute("type", "radio");
     radio2.setAttribute("name", "edge_value");
-    radio2.setAttribute("value", "absolute");
+    radio2.setAttribute("value", "perf");
     radio2.addEventListener("click", this.radio_click.bind(this));
     this.radioDiv.appendChild(radio1);
-    this.radioDiv.insertAdjacentHTML("beforeend", "Case")
+    this.radioDiv.insertAdjacentHTML("beforeend", "Frequency")
     this.radioDiv.appendChild(radio2);
-    this.radioDiv.insertAdjacentHTML("beforeend", "Absolute Case")
+    this.radioDiv.insertAdjacentHTML("beforeend", "Performance")
   }
   
 
@@ -123,17 +153,9 @@ export class ProcessMap extends DOMWidgetView {
         },
 
         {
-          selector: 'asdf',
-          style: {
-            'background-color': '#666',
-            label: 'data(id)'
-          }
-        },
-
-        {
           selector: 'edge',
           style: {
-            label: 'data(label)',
+            label: 'data(freq)',
             width: 3,
             'line-color': '#f77f00',
             'target-arrow-color': '#f77f00',
@@ -185,27 +207,15 @@ export class ProcessMap extends DOMWidgetView {
             id: edge.from + edge.to,
             source: edge.from,
             target: edge.to,
-            label: edge.value
-          }
-        });
-      }
-      if (!nodenames.includes(edge.from)) {
-        nodelist.push({ data: { id: edge.from } });
-        nodenames.push(edge.from);
-      }
-      if (edge.from !== edge.to) {
-        edgelist.push({
-          data: {
-            id: edge.from + edge.to,
-            source: edge.from,
-            target: edge.to,
-            label: edge.value
+            freq: edge.value,
+            perf: edge.perf
+
           }
         });
       }
 
       if (!nodenames.includes(edge.from)) {
-        nodelist.push({ data: { id: edge.from } });
+        nodelist.push({ data: { id: edge.from, perf: edge.perf } });
         nodenames.push(edge.from);
       }
       if (!nodenames.includes(edge.to)) {
