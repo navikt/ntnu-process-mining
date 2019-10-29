@@ -148,7 +148,10 @@ export class ProcessMap extends DOMWidgetView {
           selector: 'node',
           style: {
             'background-color': '#666',
-            label: 'data(id)'
+            label: 'data(id)',
+            height: '14px',
+            width: '14px',                     
+
           }
         },
 
@@ -156,9 +159,9 @@ export class ProcessMap extends DOMWidgetView {
           selector: 'edge',
           style: {
             label: 'data(freq)',
-            width: 3,
-            'line-color': '#f77f00',
-            'target-arrow-color': '#f77f00',
+            width: 2,
+            'line-color': '#a89076',
+            'target-arrow-color': '#a89076',
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier'
           }
@@ -172,26 +175,17 @@ export class ProcessMap extends DOMWidgetView {
     
   }
 
-  private getLayout() {
-    return {
-      name: 'cola',
-      idealEdgeLength: () => 100,
-      nodeOverlap: 20,
-      refresh: 20,
-      fit: true,
-      padding: 3,
-      randomize: false,
-      componentSpacing: 100,
-      nodeRepulsion: () => 400000,
-      edgeElasticity: () => 100,
-      nestingFactor: 5,
-      gravity: -800,
-      numIter: 1000,
-      initialTemp: 200,
-      coolingFactor: 0.95,
-      minTemp: 1.0
-    };
-  }
+ private getLayout() {
+  return {
+    name: 'breadthfirst',
+    avoidOverlap: true,
+    animate: false, 
+    directed: false,
+    grid: false,
+    nodeDimensionsIncludeLabels: true, 
+  };
+}
+
 
   private getElements() {
     const edges: IEdge[] = this.model.get('value') || [];
