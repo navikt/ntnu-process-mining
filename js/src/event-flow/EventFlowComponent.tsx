@@ -1,11 +1,11 @@
+import { withScreenSize } from '@vx/responsive';
 import React, { useCallback } from 'react';
 import { default as App } from './App';
-import { withScreenSize } from '@vx/responsive';
 
-const ResponsiveVis = withScreenSize(({ screenWidth, theRef, ...rest }) => (
+const ResponsiveVis = withScreenSize(({ screenWidth, screenHeight, theRef, ...rest }) => (
   <App
-    width={screenWidth * 0.7}
-    height={500}
+    width={950}
+    height={1200}
     ref={theRef}
     initialMinEventCount={2}
     {...rest}

@@ -317,7 +317,7 @@ class App extends React.PureComponent {
             }}
             metaData={metaData}
             hiddenEventTypes={hiddenEventTypes}
-            width={width - visualizationWidth}
+            width={visualizationWidth}
           />
         </SplitPane>
       </div>
