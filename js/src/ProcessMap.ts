@@ -8,8 +8,9 @@ cytoscape.use(cola);
 interface IEdge {
   from: string;
   to: string;
-  value: number;
+  freq: number;
   perf: number;
+  abs_freq: number;
 }
 
 export class ProcessMap extends DOMWidgetView {
@@ -31,7 +32,7 @@ export class ProcessMap extends DOMWidgetView {
     this.create_radiobtns();
     this.slider.type = 'range';
     this.slider.step = '1';
-    this.slider.value = '50';
+    this.slider.value = '20';
     this.slider.oninput = () => {
       output.innerHTML = this.slider.value;
       const newValue = parseInt(this.slider.value, 10);
@@ -51,14 +52,17 @@ export class ProcessMap extends DOMWidgetView {
   public radio_click(thisRadio: MouseEvent) {
     let state = (<HTMLInputElement>event.target).value
     let new_label
+    console.log(state)
     switch(state) {
       case 'freq':
         new_label = 'data(freq)'
         break;
       case 'perf':
         new_label = 'data(perf)'
+        break;
+      case 'abs_freq':
+        new_label = 'data(abs_freq)'
     }
-    console.log(new_label)
 
     //let stringStylesheet = 'node { label: ' + 'asdf' + '; }';
     /*this.cy.style([
@@ -103,11 +107,18 @@ export class ProcessMap extends DOMWidgetView {
     const radio2: HTMLInputElement = document.createElement('input');
     radio2.setAttribute("type", "radio");
     radio2.setAttribute("name", "edge_value");
-    radio2.setAttribute("value", "perf");
+    radio2.setAttribute("value", "abs_freq");
     radio2.addEventListener("click", this.radio_click.bind(this));
+    const radio3: HTMLInputElement = document.createElement('input');
+    radio3.setAttribute("type", "radio");
+    radio3.setAttribute("name", "edge_value");
+    radio3.setAttribute("value", "perf");
+    radio3.addEventListener("click", this.radio_click.bind(this));
     this.radioDiv.appendChild(radio1);
     this.radioDiv.insertAdjacentHTML("beforeend", "Frequency")
     this.radioDiv.appendChild(radio2);
+    this.radioDiv.insertAdjacentHTML("beforeend", "Absolute Case")
+    this.radioDiv.appendChild(radio3);
     this.radioDiv.insertAdjacentHTML("beforeend", "Performance")
   }
   
@@ -207,8 +218,9 @@ export class ProcessMap extends DOMWidgetView {
             id: edge.from + edge.to,
             source: edge.from,
             target: edge.to,
-            freq: edge.value,
-            perf: edge.perf
+            freq: edge.freq,
+            perf: edge.perf,
+            abs_freq: edge.abs_freq
 
           }
         });
