@@ -239,7 +239,7 @@ function ControlPanel({
                                 ` (${hiddenEventCount} hidden [${hiddenEventPerc.toFixed(1)}%])`}
                             </div>
                         </div>
-                        <div className={css(styles.flexColumn)}>
+                        <div className={css(styles.flexRow)}>
                             <EventTypeRadialChart
                                 data={metaData.eventCountArray}
                                 width={0.7 * width}
