@@ -2,10 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SplitPane from 'react-split-pane';
-
-import './splitpane.css';
-
 import ControlPanel, { width as CONTROLS_WIDTH } from './ControlPanel';
 import Visualization, { margin as VIS_MARGIN } from '@data-ui/event-flow/src/components/Visualization';
 
@@ -19,6 +15,7 @@ import {
   EVENT_NAME,
   ELAPSED_TIME_SCALE,
   EVENT_COUNT_SCALE,
+  EVENT_SEQUENCE_SCALE,
   NODE_COLOR_SCALE,
   ORDER_BY_EVENT_COUNT,
 } from '@data-ui/event-flow/src/constants';
@@ -68,7 +65,7 @@ class App extends React.PureComponent {
     const scales = this.getScales(graph, visualizationWidth, height);
 
     this.state = {
-      xScaleType: ELAPSED_TIME_SCALE,
+      xScaleType: EVENT_SEQUENCE_SCALE,
       yScaleType: EVENT_COUNT_SCALE,
       orderBy: ORDER_BY_EVENT_COUNT,
       alignByIndex,
