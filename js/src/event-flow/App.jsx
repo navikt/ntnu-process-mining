@@ -277,12 +277,6 @@ class App extends React.PureComponent {
 
     return (
       <div style={{ position: 'relative', width, height }}>
-        <SplitPane
-          size={visualizationWidth}
-          minSize={visualizationWidth}
-          maxSize={visualizationWidth}
-          split="vertical"
-        >
           <Visualization
             onClickNode={node => {
               this.setState({ selectedNode: node });
@@ -319,7 +313,6 @@ class App extends React.PureComponent {
             hiddenEventTypes={hiddenEventTypes}
             width={visualizationWidth}
           />
-        </SplitPane>
       </div>
     );
   }

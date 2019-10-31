@@ -4,8 +4,8 @@ import { default as App } from './App';
 
 const ResponsiveVis = withScreenSize(({ screenWidth, screenHeight, theRef, ...rest }) => (
   <App
-    width={950}
-    height={1200}
+    width={1200}
+    height={900}
     ref={theRef}
     initialMinEventCount={2}
     {...rest}
