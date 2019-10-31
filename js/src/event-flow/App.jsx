@@ -2,10 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SplitPane from 'react-split-pane';
-
-import './splitpane.css';
-
 import ControlPanel, { width as CONTROLS_WIDTH } from './ControlPanel';
 import Visualization, { margin as VIS_MARGIN } from '@data-ui/event-flow/src/components/Visualization';
 
