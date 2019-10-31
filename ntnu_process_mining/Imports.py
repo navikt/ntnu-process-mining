@@ -30,3 +30,4 @@ def Event(file_in):
 
 def Style():
     return HTML('<style>.Select-multi-value-wrapper{height:2ch;} .Select-multi-value-wrapper input{display:none;} .Select-input{display:none;}</style>')
+
