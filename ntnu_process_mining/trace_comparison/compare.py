@@ -1,4 +1,3 @@
-import os
 import collections
 import itertools
 from ntnu_process_mining.utils.events_to_traces import convert_to_traces
@@ -33,7 +32,7 @@ def _compare_traces(embedded_log, comparison_trace, top_n):
 
 
 def _embed_traces(log, trace):
-    unique_traces = convert_to_traces(log, apply_filter=True)
+    unique_traces = convert_to_traces(log)
     activies = log.activity.unique()
     embedding = {}
     for i, activity in enumerate(activies):
