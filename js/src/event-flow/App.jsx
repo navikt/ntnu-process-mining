@@ -19,6 +19,7 @@ import {
   EVENT_NAME,
   ELAPSED_TIME_SCALE,
   EVENT_COUNT_SCALE,
+  EVENT_SEQUENCE_SCALE,
   NODE_COLOR_SCALE,
   ORDER_BY_EVENT_COUNT,
 } from '@data-ui/event-flow/src/constants';
@@ -68,7 +69,7 @@ class App extends React.PureComponent {
     const scales = this.getScales(graph, visualizationWidth, height);
 
     this.state = {
-      xScaleType: ELAPSED_TIME_SCALE,
+      xScaleType: EVENT_SEQUENCE_SCALE,
       yScaleType: EVENT_COUNT_SCALE,
       orderBy: ORDER_BY_EVENT_COUNT,
       alignByIndex,
