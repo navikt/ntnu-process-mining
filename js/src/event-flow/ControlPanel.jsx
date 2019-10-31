@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontColor: '#767676',
         width: 'auto',
-        height: '100%',
         padding: `${0}px ${padding}px`,
         background: '#fff',
     },
@@ -67,6 +66,7 @@ const styles = StyleSheet.create({
         right: '100%',
         textAlign: 'right',
     },
+
     padBottom: {
         paddingBottom: padding,
     },
