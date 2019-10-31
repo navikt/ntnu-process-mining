@@ -6,7 +6,7 @@ import SplitPane from 'react-split-pane';
 
 import './splitpane.css';
 
-import ControlPanel, { width as CONTROLS_WIDTH } from '@data-ui/event-flow/src/components/ControlPanel';
+import ControlPanel, { width as CONTROLS_WIDTH } from './ControlPanel';
 import Visualization, { margin as VIS_MARGIN } from '@data-ui/event-flow/src/components/Visualization';
 
 import { findNthIndexOfX, getEventCountLookup } from '@data-ui/event-flow/src/utils/data-utils';
@@ -281,7 +281,7 @@ class App extends React.PureComponent {
           size={visualizationWidth}
           minSize={visualizationWidth}
           maxSize={visualizationWidth}
-          split="horizontal"
+          split="vertical"
         >
           <Visualization
             onClickNode={node => {
