@@ -1,6 +1,24 @@
+import ipywidgets as widgets
+from traitlets import Unicode, Dict
 import collections
 import itertools
 from ntnu_process_mining.utils.events_to_traces import convert_to_traces
+
+
+@widgets.register
+class TraceComparison(widgets.DOMWidget):
+
+    _view_name = Unicode("TraceComparisonView").tag(sync=True)
+    _model_name = Unicode("TraceComparisonModel").tag(sync=True)
+    _view_module = Unicode("ntnu-process-mining").tag(sync=True)
+    _model_module = Unicode("ntnu-process-mining").tag(sync=True)
+    _view_module_version = Unicode("^0.1.0").tag(sync=True)
+    _model_module_version = Unicode("^0.1.0").tag(sync=True)
+    result = Dict({}).tag(sync=True)
+
+    def update(self, log, trace, top_n):
+        result = _find_similar_traces(log, trace, top_n=5)
+        self.result = result
 
 
 def _levenshtein_distance(a, b):
@@ -49,7 +67,7 @@ def _embed_traces(log, trace):
     return embedded_log, embedded_trace, inverse_embedding
 
 
-def find_similar_traces(log, trace, top_n):
+def _find_similar_traces(log, trace, top_n):
     embedded_log, embedded_trace, inverse_embedding = _embed_traces(log, trace)
     result = _compare_traces(embedded_log, embedded_trace, top_n)
     similar_traces = {}

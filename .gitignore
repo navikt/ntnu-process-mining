@@ -13,3 +13,5 @@ ntnu_process_mining/static/
 .DS_Store
 
 tags
+
+package-lock\.json

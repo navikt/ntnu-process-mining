@@ -1,6 +1,7 @@
 from ._version import version_info, __version__
 
-from .example import *
+from .widgets.process_map import *
+from .widgets.trace_comparison import *
 
 
 def _jupyter_nbextension_paths():
