@@ -1,6 +1,7 @@
 import { css, StyleSheet } from 'aphrodite';
 import React from 'react';
 import PropTypes from 'prop-types';
+import './controlpanel.css';
 
 import { Button, Select, StepIncrementer } from '@data-ui/forms';
 
