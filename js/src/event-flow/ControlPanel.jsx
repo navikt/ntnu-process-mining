@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
         right: '100%',
         textAlign: 'right',
     },
-
     padBottom: {
         paddingBottom: padding,
     },
