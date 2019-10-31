@@ -1,5 +1,5 @@
 import ipywidgets as widgets
-from traitlets import Unicode, Dict
+from traitlets import Unicode, Dict, List
 import collections
 import itertools
 from ntnu_process_mining.utils.events_to_traces import convert_to_traces
@@ -15,10 +15,12 @@ class TraceComparison(widgets.DOMWidget):
     _view_module_version = Unicode("^0.1.0").tag(sync=True)
     _model_module_version = Unicode("^0.1.0").tag(sync=True)
     result = Dict({}).tag(sync=True)
+    activities = List([]).tag(sync=True)
 
     def update(self, log, trace, top_n):
         result = _find_similar_traces(log, trace, top_n=5)
         self.result = result
+        self.activities = log.activity.unique()
 
 
 def _levenshtein_distance(a, b):
