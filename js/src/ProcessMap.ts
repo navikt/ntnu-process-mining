@@ -11,6 +11,7 @@ interface IEdge {
   freq: number;
   perf: number;
   abs_freq: number;
+  perf_med: number;
 }
 
 export class ProcessMap extends DOMWidgetView {
@@ -62,6 +63,9 @@ export class ProcessMap extends DOMWidgetView {
         break;
       case 'abs_freq':
         newLabel = 'data(abs_freq)';
+        break;
+      case 'perf_med':
+        newLabel = 'data(perf_med)';
     }
     this.cy
       .style()
@@ -97,6 +101,13 @@ export class ProcessMap extends DOMWidgetView {
     radio3.setAttribute('value', 'perf');
     radio3.addEventListener('change', this.radio_change.bind(this));
 
+    const radio4: HTMLInputElement = document.createElement('input');
+    radio4.setAttribute('type', 'radio');
+    radio4.setAttribute('name', 'edge_value');
+    radio4.setAttribute('id', 'perf_med');
+    radio4.setAttribute('value', 'perf_med');
+    radio4.addEventListener('change', this.radio_change.bind(this));
+
     this.radioDiv.appendChild(radio1);
     this.radioDiv.insertAdjacentHTML(
       'beforeend',
@@ -111,6 +122,11 @@ export class ProcessMap extends DOMWidgetView {
     this.radioDiv.insertAdjacentHTML(
       'beforeend',
       `<label for="perf">Performance (time spent)</label><br/>`
+    );
+    this.radioDiv.appendChild(radio4);
+    this.radioDiv.insertAdjacentHTML(
+      'beforeend',
+      `<label for="perf_med">Performance median(time spent)</label><br/>`
     );
   }
 
@@ -194,7 +210,8 @@ export class ProcessMap extends DOMWidgetView {
             // Custom values
             freq: edge.freq,
             abs_freq: edge.abs_freq,
-            perf: edge.perf && `${edge.perf} min`
+            perf: edge.perf,
+            perf_med: edge.perf_med,
           }
         });
       }
