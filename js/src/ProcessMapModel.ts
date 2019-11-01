@@ -11,7 +11,7 @@ export class ProcessMapModel extends DOMWidgetModel {
       _model_module_version: '0.1.0',
       _view_module_version: '0.1.0',
       value: [{ from: 'a', to: 'b', value: 31 }],
-      filter: 50
+      filter: 25
     };
   }
 }

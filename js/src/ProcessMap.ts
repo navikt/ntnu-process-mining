@@ -8,8 +8,9 @@ cytoscape.use(cola);
 interface IEdge {
   from: string;
   to: string;
-  value: number;
+  freq: number;
   perf: number;
+  abs_freq: number;
 }
 
 export class ProcessMap extends DOMWidgetView {
@@ -31,86 +32,87 @@ export class ProcessMap extends DOMWidgetView {
     this.create_radiobtns();
     this.slider.type = 'range';
     this.slider.step = '1';
-    this.slider.value = '50';
+    this.slider.value = this.model.get('filter');
+    output.innerHTML = this.slider.value;
     this.slider.oninput = () => {
       output.innerHTML = this.slider.value;
       const newValue = parseInt(this.slider.value, 10);
       this.model.set('filter', newValue);
       this.model.save_changes();
     };
-    
+
     this.el.appendChild(this.slider);
-    this.el.appendChild(this.radioDiv)
+    this.el.appendChild(this.radioDiv);
     this.el.appendChild(output);
     ////
 
     this.el.appendChild(this.element);
     this.model.on('change:value', this.value_changed, this);
-    this.model.on('change:filter', this.filter_changed, this);
   }
-  public radio_click(thisRadio: MouseEvent) {
-    let state = (<HTMLInputElement>event.target).value
-    let new_label
-    switch(state) {
+  public radio_change(event: Event) {
+    const val = (event.target as HTMLInputElement).value;
+    let newLabel = 'data(freq)';
+
+    switch (val) {
       case 'freq':
-        new_label = 'data(freq)'
+        newLabel = 'data(freq)';
         break;
       case 'perf':
-        new_label = 'data(perf)'
+        newLabel = 'data(perf)';
+        break;
+      case 'abs_freq':
+        newLabel = 'data(abs_freq)';
     }
-    console.log(new_label)
-
-    //let stringStylesheet = 'node { label: ' + 'asdf' + '; }';
-    /*this.cy.style([
-      // the stylesheet for the graph
-      {
-        selector: 'node',
-        style: {
-          'background-color': '#FF1',
-          label: 'data(id)'
-        }
-      },
-      {
-        selector: 'edge',
-        style: {
-          label: 'data(label)',
-          width: 3,
-          'line-color': '#f77f00',
-          'target-arrow-color': '#f77f00',
-          'target-arrow-shape': 'triangle',
-          'curve-style': 'bezier'
-        }
-      }
-    ]);*/
-// @ts-ignore
-    this.cy.style().selector('edge')
-    .style({
-      'background-color': 'red',
-      'label': new_label
-    })
-    .update() // indicate the end of your new stylesheet so that it can be updated on elements
-;
-
+    this.cy
+      .style()
+      // @ts-ignore
+      .selector('edge')
+      .style({
+        'background-color': 'red',
+        label: newLabel
+      })
+      .update(); // indicate the end of your new stylesheet so that it can be updated on elements
   }
   public create_radiobtns() {
     this.radioDiv = document.createElement('div');
     const radio1: HTMLInputElement = document.createElement('input');
-    radio1.setAttribute("type", "radio");
-    radio1.setAttribute("name", "edge_value");
-    radio1.setAttribute("value", "freq");
-    radio1.addEventListener("click", this.radio_click.bind(this));
-    radio1.setAttribute("checked", "True");
+    radio1.setAttribute('type', 'radio');
+    radio1.setAttribute('name', 'edge_value');
+    radio1.setAttribute('id', 'freq');
+    radio1.setAttribute('value', 'freq');
+    radio1.addEventListener('change', this.radio_change.bind(this));
+    radio1.setAttribute('checked', 'True');
+
     const radio2: HTMLInputElement = document.createElement('input');
-    radio2.setAttribute("type", "radio");
-    radio2.setAttribute("name", "edge_value");
-    radio2.setAttribute("value", "perf");
-    radio2.addEventListener("click", this.radio_click.bind(this));
+    radio2.setAttribute('type', 'radio');
+    radio2.setAttribute('name', 'edge_value');
+    radio2.setAttribute('id', 'abs_freq');
+    radio2.setAttribute('value', 'abs_freq');
+    radio2.addEventListener('change', this.radio_change.bind(this));
+
+    const radio3: HTMLInputElement = document.createElement('input');
+    radio3.setAttribute('type', 'radio');
+    radio3.setAttribute('name', 'edge_value');
+    radio3.setAttribute('id', 'perf');
+    radio3.setAttribute('value', 'perf');
+    radio3.addEventListener('change', this.radio_change.bind(this));
+
     this.radioDiv.appendChild(radio1);
-    this.radioDiv.insertAdjacentHTML("beforeend", "Frequency")
+    this.radioDiv.insertAdjacentHTML(
+      'beforeend',
+      `<label for="freq">Frequency (number of occurences)</label><br/>`
+    );
     this.radioDiv.appendChild(radio2);
-    this.radioDiv.insertAdjacentHTML("beforeend", "Performance")
+    this.radioDiv.insertAdjacentHTML(
+      'beforeend',
+      `<label for="abs_freq">Frequency – Absolute Case (duplicates within a case are removed)</label><br/>`
+    );
+    this.radioDiv.appendChild(radio3);
+    this.radioDiv.insertAdjacentHTML(
+      'beforeend',
+      `<label for="perf">Performance (time spent)</label><br/>`
+    );
   }
-  
 
   public value_changed() {
     console.log('value_changed');
@@ -122,12 +124,6 @@ export class ProcessMap extends DOMWidgetView {
       //this.setSourceAndSink();
       layout.run();
     }
-  }
-
-  public filter_changed() {
-    const oldValue = this.model.previous('filter');
-    const newValue = this.model.get('filter');
-    console.log('filter changed', oldValue, newValue);
   }
 
   public render() {
@@ -150,8 +146,7 @@ export class ProcessMap extends DOMWidgetView {
             'background-color': '#666',
             label: 'data(id)',
             height: '14px',
-            width: '14px',                     
-
+            width: '14px'
           }
         },
 
@@ -169,23 +164,19 @@ export class ProcessMap extends DOMWidgetView {
       ],
 
       layout: this.getLayout()
-
-      
     });
-    
   }
 
- private getLayout() {
-  return {
-    name: 'breadthfirst',
-    avoidOverlap: true,
-    animate: false, 
-    directed: false,
-    grid: false,
-    nodeDimensionsIncludeLabels: true, 
-  };
-}
-
+  private getLayout() {
+    return {
+      name: 'breadthfirst',
+      avoidOverlap: true,
+      animate: false,
+      directed: false,
+      grid: false,
+      nodeDimensionsIncludeLabels: true
+    };
+  }
 
   private getElements() {
     const edges: IEdge[] = this.model.get('value') || [];
@@ -201,9 +192,10 @@ export class ProcessMap extends DOMWidgetView {
             id: edge.from + edge.to,
             source: edge.from,
             target: edge.to,
-            freq: edge.value,
-            perf: edge.perf
-
+            // Custom values
+            freq: edge.freq,
+            abs_freq: edge.abs_freq,
+            perf: edge.perf && `${edge.perf} min`
           }
         });
       }
