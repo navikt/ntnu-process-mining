@@ -145,11 +145,8 @@ h1{
       color: #333;
   }
 .innerContainer_lqge4f{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content:space-between;
-    width: 820px;
+    display: grid;
+    grid-template-columns: 30% 70% !important;
 }
 ._lqge4f div{
     margin:1%;
@@ -173,14 +170,50 @@ h1{
     margin-left: 15px;
 }
 
-.padBottom_1ouw2w0{
-    height: 300px !important;
-}
 
 .flexColumn_wgmchy-o_O-padBottom_1ouw2w0{
-    height: 300px !important;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
 }
 
 .Select-value input{
     display: none !important;
+}
+
+.padBottom_1ouw2w0{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+}
+
+.flexColumn_wgmchy-o_O-padBottom_1ouw2w0{
+    grid-column-start: 2;
+    grid-column-end: 2;
+}
+
+.sortNodes{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+.alignSequence{
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.x-axis{
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+.hideNodes{
+    grid-row-start: 4;
+    grid-row-end: 4;
 }

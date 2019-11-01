@@ -119,6 +119,12 @@ const styles = StyleSheet.create({
         fontWeight: 200,
         fontSize: 12,
     },
+
+    grid:{
+        display: 'grid',
+        gridtemplatecolumns: '50% 50%',
+    }
+
 });
 
 const propTypes = {
@@ -231,16 +237,17 @@ function ControlPanel({
             {showControls && (
                 <div className={css(styles.innerContainer)}>
                     <div className={css(styles.padBottom)}>
+                        <div className={"alignSequence"}>
                         <div className={css(styles.title)}>Align sequences by</div>
-                        <div className={css(styles.flexRow)}>
-                            <StepIncrementer
-                                min={-5}
-                                max={5}
-                                value={alignByIndex}
-                                onChange={onChangeAlignByIndex}
-                                formatValue={formatIncrementerValue}
-                                disableZero
-                            />
+                            <div className={css(styles.flex)}>
+                                <StepIncrementer
+                                    min={-5}
+                                    max={5}
+                                    value={alignByIndex}
+                                    onChange={onChangeAlignByIndex}
+                                    formatValue={formatIncrementerValue}
+                                    disableZero
+                                />
                             <div className={css(styles.alignBySelect)}>
                                 <Select
                                     value={alignByEventType}
@@ -251,7 +258,33 @@ function ControlPanel({
                                 />
                             </div>
                         </div>
+                        </div>
+                        <div className={"x-axis"}>
+                        <div className={css(styles.padBottom)}>
+                        <div className={css(styles.title)}>X-axis</div>
+                        <Select
+                            value={xScaleType}
+                            options={[
+                                { label: 'Elapsed time', value: ELAPSED_TIME_SCALE },
+                                { label: 'Event sequence', value: EVENT_SEQUENCE_SCALE },
+                            ]}
+                            onChange={({ value }) => onChangeXScale(value)}
+                        />
                     </div>
+                    </div>
+                    <div className={"sortNodes"}>
+                            <div className={css(styles.title)}>Sort nodes with the same parent by</div>
+                            <Select
+                                value={orderBy}
+                                options={[
+                                    { label: 'Event count', value: ORDER_BY_EVENT_COUNT },
+                                    { label: 'Time to next event', value: ORDER_BY_ELAPSED_MS },
+                                ]}
+                                onChange={({ value }) => onChangeOrderBy(value)}
+                            />
+                        </div>
+                    </div>
+                  
 
                     <div className={css(styles.flexColumn, styles.padBottom)}>
                         <div className={css(styles.title)}>
@@ -285,7 +318,7 @@ function ControlPanel({
                             />
                         </div>
                     </div>
-
+                    <div className={"hideNodes"}>
                     <div className={css(styles.padBottom)}>
                         <StepIncrementer
                             min={1}
@@ -296,28 +329,6 @@ function ControlPanel({
                         />
                     </div>
 
-                    <div className={css(styles.padBottom)}>
-                        <div className={css(styles.title)}>X-axis</div>
-                        <Select
-                            value={xScaleType}
-                            options={[
-                                { label: 'Elapsed time', value: ELAPSED_TIME_SCALE },
-                                { label: 'Event sequence', value: EVENT_SEQUENCE_SCALE },
-                            ]}
-                            onChange={({ value }) => onChangeXScale(value)}
-                        />
-                    </div>
-
-                    <div>
-                        <div className={css(styles.title)}>Sort nodes with the same parent by</div>
-                        <Select
-                            value={orderBy}
-                            options={[
-                                { label: 'Event count', value: ORDER_BY_EVENT_COUNT },
-                                { label: 'Time to next event', value: ORDER_BY_ELAPSED_MS },
-                            ]}
-                            onChange={({ value }) => onChangeOrderBy(value)}
-                        />
                     </div>
                 </div>
                
