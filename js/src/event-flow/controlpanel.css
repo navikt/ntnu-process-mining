@@ -1,4 +1,16 @@
 
+.content{
+    background-color: #323232;
+    border-radius: 10px;
+}
+
+h1{
+    text-align: center;
+    color: whitesmoke;
+    font-weight: bolder;
+    margin-top: 1%;
+}
+
 .Select-control{
     user-select: text;
     font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
@@ -133,7 +145,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content:space-between;
-    width: 750px;
+    width: 820px;
 }
 ._lqge4f div{
     margin:1%;
@@ -141,7 +153,7 @@
 }
 
 .innerContainer_lqge4f{
-    height: 600px !important;
+    height: 400px !important;
 }
 
 .vx-legend{
@@ -149,10 +161,18 @@
     overflow-y:auto;
 }
 
-padBottom_1ouw2w0{
-    height: 100px !important;
+.innerContainer_lqge4f{
+    padding: 1%;
+    padding-right: 2%;
+    border: 2px solid #323232;
+    border-radius: 10px;
+    background-color: #f5f5f5;
 }
 
-.innerContainer_lqge4f{
-    padding: 0;
+.padBottom_1ouw2w0{
+    height: 300px !important;
+}
+
+.flexColumn_wgmchy-o_O-padBottom_1ouw2w0{
+    height: 300px !important;
 }
