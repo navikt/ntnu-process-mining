@@ -173,7 +173,9 @@ export class ProcessMap extends DOMWidgetView {
             'line-color': '#a89076',
             'target-arrow-color': '#a89076',
             'target-arrow-shape': 'triangle',
-            'curve-style': 'bezier'
+            'curve-style': 'bezier',
+            'text-margin-x': -10,
+            'text-margin-y': -10
           }
         }
       ],
