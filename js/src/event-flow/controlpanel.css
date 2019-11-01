@@ -11,6 +11,10 @@ h1{
     margin-top: 1%;
 }
 
+.Select-control input{
+    display: none !important;
+}
+
 .Select-control{
     user-select: text;
     font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
@@ -78,7 +82,7 @@ h1{
     padding-right: 10px;
     vertical-align: middle;
     box-sizing: border-box;
-    display: inline-block;
+    display: none;
 }
 .Select-arrow-zone{
     user-select: text;
