@@ -16,11 +16,16 @@ class TraceComparison(widgets.DOMWidget):
     _model_module_version = Unicode("^0.1.0").tag(sync=True)
     result = Dict({}).tag(sync=True)
     activities = List([]).tag(sync=True)
+    trace = List([]).tag(sync=True)
 
-    def update(self, log, trace, top_n):
-        result = _find_similar_traces(log, trace, top_n=5)
+    def set_log(self, event_log):
+        self.event_log = event_log
+        self.observe(self.on_trace_change, names="trace")
+        self.activities = self.event_log.activity.unique().tolist()
+
+    def on_trace_change(self, change={}):
+        result = _find_similar_traces(self.event_log, self.trace, top_n=5)
         self.result = result
-        self.activities = log.activity.unique()
 
 
 def _levenshtein_distance(a, b):
