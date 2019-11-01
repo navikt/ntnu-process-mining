@@ -1,5 +1,5 @@
 import { DOMWidgetView } from '@jupyter-widgets/base';
-import * as React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import EventFlowComponent, { IEvent } from './event-flow/EventFlowComponent';
 
