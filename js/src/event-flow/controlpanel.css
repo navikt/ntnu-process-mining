@@ -150,10 +150,21 @@ h1{
     grid-template-columns: 30% 65% !important;
     grid-column-gap: 5%;
 }
+
 ._lqge4f div{
     margin:1%;
     height: 35vh;
 }
+
+.header_dmn8hc {
+    width: 82%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .header_dmn8hc {
+        width: fit-content;
+    }
+  }
 
 .innerContainer_lqge4f{
     height: 400px !important;
