@@ -296,7 +296,9 @@ function ControlPanel({
                         />
                     </div>
                 </div>
+               
             )}
+            
         </div>
     );
 }
