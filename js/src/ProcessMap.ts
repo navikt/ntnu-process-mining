@@ -115,13 +115,12 @@ export class ProcessMap extends DOMWidgetView {
   }
 
   public value_changed() {
-    console.log('value_changed');
     if (this.cy) {
       // this.cy.json({ elements: this.getElements() });
       this.cy.elements().remove();
       this.cy.add(this.getElements());
       const layout = this.cy.layout(this.getLayout());
-      //this.setSourceAndSink();
+      // this.setSourceAndSink();
       layout.run();
     }
   }
