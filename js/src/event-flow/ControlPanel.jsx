@@ -238,26 +238,31 @@ function ControlPanel({
                 <div className={css(styles.innerContainer)}>
                     <div className={css(styles.padBottom)}>
                         <div className={"alignSequence"}>
-                        <div className={css(styles.title)}>Align sequences by</div>
-                            <div className={css(styles.flex)}>
-                                <StepIncrementer
-                                    min={-5}
-                                    max={5}
-                                    value={alignByIndex}
-                                    onChange={onChangeAlignByIndex}
-                                    formatValue={formatIncrementerValue}
-                                    disableZero
-                                />
-                            <div className={css(styles.alignBySelect)}>
-                                <Select
-                                    value={alignByEventType}
-                                    options={eventTypeOptions.filter(opt => opt.value !== FILTERED_EVENTS)}
-                                    optionRenderer={valueRenderer}
-                                    valueRenderer={valueRenderer}
-                                    onChange={({ value }) => onChangeAlignByEventType(value)}
-                                />
+                            <div className={"aligner"}>
+                                <div className={css(styles.title)}>Align sequences by</div>
+                                <div className ={"underSequence"}>
+                                    <div className={css(styles.flex)}>
+                                        <StepIncrementer
+                                            min={-5}
+                                            max={5}
+                                            value={alignByIndex}
+                                            onChange={onChangeAlignByIndex}
+                                            formatValue={formatIncrementerValue}
+                                            disableZero
+                                        />
+                                     </div>
+                                    
+                                <div className={css(styles.alignBySelect)}>
+                                    <Select
+                                        value={alignByEventType}
+                                        options={eventTypeOptions.filter(opt => opt.value !== FILTERED_EVENTS)}
+                                        optionRenderer={valueRenderer}
+                                        valueRenderer={valueRenderer}
+                                        onChange={({ value }) => onChangeAlignByEventType(value)}
+                                    />
+                                </div>
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <div className={"x-axis"}>
                         <div className={css(styles.padBottom)}>
