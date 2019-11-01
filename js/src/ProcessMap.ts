@@ -159,9 +159,10 @@ export class ProcessMap extends DOMWidgetView {
           selector: 'node',
           style: {
             'background-color': '#666',
-            label: 'data(id)',
             height: '14px',
-            width: '14px'
+            width: '14px',
+            'text-wrap': 'wrap',
+            label: 'data(label)'
           }
         },
 
@@ -200,7 +201,7 @@ export class ProcessMap extends DOMWidgetView {
 
     const edgelist = [];
     const nodelist = [];
-    const nodenames = [];
+    const nodenames = {};
 
     edges.forEach(edge => {
       if (edge.from !== edge.to) {
@@ -213,19 +214,26 @@ export class ProcessMap extends DOMWidgetView {
             freq: edge.freq,
             abs_freq: edge.abs_freq,
             perf: edge.perf,
-            perf_med: edge.perf_med,
+            perf_med: edge.perf_med
           }
         });
       }
 
-      if (!nodenames.includes(edge.from)) {
-        nodelist.push({ data: { id: edge.from, perf: edge.perf } });
-        nodenames.push(edge.from);
+      if (!Object.keys(nodenames).includes(edge.from)) {
+        nodelist.push({ data: { id: edge.from, label: edge.from } });
+        nodenames[edge.from] = 0;
       }
-      if (!nodenames.includes(edge.to)) {
-        nodelist.push({ data: { id: edge.to } });
-        nodenames.push(edge.to);
+
+      if (typeof edge.freq === 'number') {
+        nodenames[edge.from] += edge.freq;
       }
+
+      if (!Object.keys(nodenames).includes(edge.to)) {
+        nodelist.push({ data: { id: edge.to, label: edge.to } });
+      }
+    });
+    nodelist.forEach(node => {
+      node['data']['label'] += ' (' + nodenames[node['data']['id']] + ')';
     });
     return nodelist.concat(edgelist);
   }
