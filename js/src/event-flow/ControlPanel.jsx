@@ -79,9 +79,10 @@ const styles = StyleSheet.create({
     },
 
     alignBySelect: {
-        paddingLeft: Number(unit),
+        paddingLeft: Number(0),
         fontWeight: 700,
         flexGrow: 1,
+        paddingLeft: 0,
     },
 
     header: {
