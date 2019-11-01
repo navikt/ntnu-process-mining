@@ -176,3 +176,7 @@ h1{
 .flexColumn_wgmchy-o_O-padBottom_1ouw2w0{
     height: 300px !important;
 }
+
+.Select-value input{
+    display: none !important;
+}
