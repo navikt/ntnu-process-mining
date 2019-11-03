@@ -46,8 +46,10 @@
     "@types/node": "^12.7.5",
     "cytoscape": "^3.11.0",
     "cytoscape-cola": "^2.3.0",
+    "cytoscape-popper": "^1.0.4",
     "d3": "^5.11.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "tippy.js": "^4.3.5"
   },
   "jupyterlab": {
     "extension": "lib/labplugin"

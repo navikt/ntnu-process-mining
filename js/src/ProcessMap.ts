@@ -1,8 +1,11 @@
 import { DOMWidgetView } from '@jupyter-widgets/base';
 import cytoscape from 'cytoscape';
 import cola from 'cytoscape-cola';
+import popper from 'cytoscape-popper';
+import tippy from 'tippy.js';
 import _ from 'underscore';
 
+cytoscape.use(popper);
 cytoscape.use(cola);
 
 interface IEdge {
@@ -17,68 +20,65 @@ interface IEdge {
 export class ProcessMap extends DOMWidgetView {
   private cy: cytoscape.Core;
   private element: HTMLElement;
-  private slider: HTMLInputElement;
-  private radioDiv: HTMLElement;
+
+  private startNodeID = 'START';
+  private endNodeID = 'END';
 
   public initialize() {
     this.element = document.createElement('div') as HTMLElement;
-    this.element.id = '123';
     this.element.style.width = '100%';
-    this.element.style.height = '400px';
+    this.element.style.height = '600px';
     this.element.style.border = '1px solid black';
 
-    ////
-    this.slider = document.createElement('input');
-    const output = document.createElement('div');
-    this.create_radiobtns();
-    this.slider.type = 'range';
-    this.slider.step = '1';
-    this.slider.value = this.model.get('filter');
-    output.innerHTML = this.slider.value;
-    this.slider.oninput = () => {
-      output.innerHTML = this.slider.value;
-      const newValue = parseInt(this.slider.value, 10);
-      this.model.set('filter', newValue);
-      this.model.save_changes();
-    };
+    const sliderDiv = this.createSlider();
+    this.el.appendChild(sliderDiv);
 
-    this.el.appendChild(this.slider);
-    this.el.appendChild(this.radioDiv);
-    this.el.appendChild(output);
-    ////
+    const radioButtons = this.createRadioButtons();
+    this.el.appendChild(radioButtons);
 
     this.el.appendChild(this.element);
     this.model.on('change:value', this.value_changed, this);
   }
   public radio_change(event: Event) {
     const val = (event.target as HTMLInputElement).value;
-    let newLabel = 'data(freq)';
-
-    switch (val) {
-      case 'freq':
-        newLabel = 'data(freq)';
-        break;
-      case 'perf':
-        newLabel = 'data(perf)';
-        break;
-      case 'abs_freq':
-        newLabel = 'data(abs_freq)';
-        break;
-      case 'perf_med':
-        newLabel = 'data(perf_med)';
-    }
     this.cy
       .style()
       // @ts-ignore
       .selector('edge')
       .style({
-        'background-color': 'red',
-        label: newLabel
+        label: `data(${val})`
       })
-      .update(); // indicate the end of your new stylesheet so that it can be updated on elements
+      .update();
   }
-  public create_radiobtns() {
-    this.radioDiv = document.createElement('div');
+  public createSlider() {
+    const sliderDiv = document.createElement('div');
+    const slider = document.createElement('input');
+    const sliderValue = document.createElement('div');
+    slider.type = 'range';
+    slider.step = '1';
+    slider.style.width = '200px';
+
+    slider.oninput = () => {
+      sliderValue.innerHTML = slider.value + '%';
+      const newValue = parseInt(slider.value, 10);
+      this.model.set('filter', newValue);
+      this.model.save_changes();
+    };
+
+    const updateFilter = () => {
+      slider.value = this.model.get('filter');
+      sliderValue.innerHTML = slider.value + '%';
+    };
+    updateFilter();
+    this.model.on('change:filter', updateFilter, this);
+
+    sliderDiv.insertAdjacentHTML('beforeend', '<b>Trace frequency filter:</b>');
+    sliderDiv.appendChild(sliderValue);
+    sliderDiv.appendChild(slider);
+    return sliderDiv;
+  }
+  public createRadioButtons() {
+    const radioDiv = document.createElement('div');
     const radio1: HTMLInputElement = document.createElement('input');
     radio1.setAttribute('type', 'radio');
     radio1.setAttribute('name', 'edge_value');
@@ -108,26 +108,28 @@ export class ProcessMap extends DOMWidgetView {
     radio4.setAttribute('value', 'perf_med');
     radio4.addEventListener('change', this.radio_change.bind(this));
 
-    this.radioDiv.appendChild(radio1);
-    this.radioDiv.insertAdjacentHTML(
+    radioDiv.insertAdjacentHTML('beforeend', `<b>Edge labels:</b><br/>`);
+    radioDiv.appendChild(radio1);
+    radioDiv.insertAdjacentHTML(
       'beforeend',
-      `<label for="freq">Frequency (number of occurences)</label><br/>`
+      ` <label for="freq">Frequency (number of occurences)</label><br/>`
     );
-    this.radioDiv.appendChild(radio2);
-    this.radioDiv.insertAdjacentHTML(
+    radioDiv.appendChild(radio2);
+    radioDiv.insertAdjacentHTML(
       'beforeend',
-      `<label for="abs_freq">Frequency – Absolute Case (duplicates within a case are removed)</label><br/>`
+      ` <label for="abs_freq">Frequency – Absolute Case (duplicates within a case are removed)</label><br/>`
     );
-    this.radioDiv.appendChild(radio3);
-    this.radioDiv.insertAdjacentHTML(
+    radioDiv.appendChild(radio3);
+    radioDiv.insertAdjacentHTML(
       'beforeend',
-      `<label for="perf">Performance (time spent)</label><br/>`
+      ` <label for="perf">Mean time</label><br/>`
     );
-    this.radioDiv.appendChild(radio4);
-    this.radioDiv.insertAdjacentHTML(
+    radioDiv.appendChild(radio4);
+    radioDiv.insertAdjacentHTML(
       'beforeend',
-      `<label for="perf_med">Performance median(time spent)</label><br/>`
+      ` <label for="perf_med">Median time</label><br/>`
     );
+    return radioDiv;
   }
 
   public value_changed() {
@@ -153,38 +155,121 @@ export class ProcessMap extends DOMWidgetView {
     this.cy = cytoscape({
       container: this.element,
       elements: this.getElements(),
-      style: [
-        // the stylesheet for the graph
-        {
-          selector: 'node',
-          style: {
-            'background-color': '#666',
-            height: '14px',
-            width: '14px',
-            'text-wrap': 'wrap',
-            label: 'data(label)'
-          }
-        },
-
-        {
-          selector: 'edge',
-          style: {
-            label: 'data(freq)',
-            width: 2,
-            'line-color': '#a89076',
-            'target-arrow-color': '#a89076',
-            'target-arrow-shape': 'triangle',
-            'curve-style': 'bezier',
-            'text-margin-x': -10,
-            'text-margin-y': -10
-          }
-        }
-      ],
-
+      style: this.getStylesheet(),
       layout: this.getLayout()
+    });
+
+    this.addEdgeHoverListeners();
+    this.addNodeHoverListeners();
+  }
+  private addEdgeHoverListeners() {
+    this.cy.on('mouseover', 'edge', event => {
+      const edge = event.target;
+      let t = edge.scratch('tippy');
+      if (!t) {
+        t = tippy(edge.popperRef(), {
+          content: `
+            <div style="font-size: 1.3em;text-align:center;">
+              ${edge.attr('source')} -> ${edge.attr('target')}<br/><br/>
+              <table style="width: 100%;text-align:right;">
+              <tr>
+                <td style="text-align: left">Frequency</td>
+                <td>${edge.attr('freq')}</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">Absolute frequency</td>
+                <td>${edge.attr('abs_freq')}</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">Mean time</td>
+                <td>${edge.attr('perf')}</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">Median time</td>
+                <td>${edge.attr('perf_med')}</td>
+              </tr>
+              </table>
+            </div>
+          `,
+          trigger: 'manual'
+        });
+        edge.scratch('tippy', t);
+      }
+      t.show();
+    });
+    this.cy.on('mouseout tapstart', 'edge', event => {
+      const edge = event.target;
+      const t = edge.scratch('tippy');
+      if (t) {
+        t.hide();
+      }
+    });
+  }
+  private addNodeHoverListeners() {
+    this.cy.on('mouseover', 'node', event => {
+      const node = event.target;
+      let t = node.scratch('tippy');
+      if (!t) {
+        t = tippy(node.popperRef(), {
+          content: `
+            <div style="font-size: 1.3em;text-align:center;">
+              ${node.attr('id')}<br />
+              Frequency: ${node.attr('freq')}
+            </div>
+          `,
+          trigger: 'manual'
+        });
+        node.scratch('tippy', t);
+      }
+      t.show();
+    });
+    this.cy.on('mouseout tapstart', 'node', event => {
+      const node = event.target;
+      const t = node.scratch('tippy');
+      if (t) {
+        t.hide();
+      }
     });
   }
 
+  private getStylesheet() {
+    return [
+      {
+        selector: 'node',
+        style: {
+          width: 'label',
+          height: 'label',
+          shape: 'round-rectangle',
+          // @ts-ignore
+          padding: '10px',
+          'background-color': n => {
+            if (n.id() === this.startNodeID || n.id() === this.endNodeID) {
+              return '#ffa500';
+            }
+            return '#666';
+          },
+          'text-wrap': 'wrap',
+          label: 'data(label)',
+          'text-valign': 'center',
+          color: '#fff'
+        }
+      },
+      {
+        selector: 'edge',
+        style: {
+          label: 'data(freq)',
+          width: 2,
+          'line-color': '#a89076',
+          'target-arrow-color': '#a89076',
+          'target-arrow-shape': 'triangle',
+          'curve-style': 'bezier',
+          'text-margin-x': -10,
+          'text-margin-y': -10,
+          'background-color': 'red'
+        }
+      }
+    ];
+  }
   private getLayout() {
     return {
       name: 'breadthfirst',
@@ -192,7 +277,16 @@ export class ProcessMap extends DOMWidgetView {
       animate: false,
       directed: false,
       grid: false,
-      nodeDimensionsIncludeLabels: true
+      fit: true,
+      roots: [this.startNodeID],
+      nodeDimensionsIncludeLabels: true,
+      // Make graph go left to right instead of top down
+      transform: (node, position) => {
+        return {
+          x: position.y,
+          y: position.x
+        };
+      }
     };
   }
 
@@ -233,13 +327,16 @@ export class ProcessMap extends DOMWidgetView {
       }
     });
     nodelist.forEach(node => {
-      node['data']['label'] += ' (' + nodenames[node['data']['id']] + ')';
+      if (
+        node.data.id !== this.startNodeID &&
+        node.data.id !== this.endNodeID
+      ) {
+        node.data.label += '\n' + nodenames[node.data.id];
+        node.data.freq = nodenames[node.data.id];
+      } else {
+        node.data.freq = 'N/A';
+      }
     });
     return nodelist.concat(edgelist);
   }
-
-  /* private setSourceAndSink() {
-    let source_node = this.cy.getElementById('SOURCE')
-    source_node.id=()=>"GFSLGLK";
-  } */
 }
