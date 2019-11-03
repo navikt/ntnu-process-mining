@@ -28,19 +28,23 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@storybook/react": "^5.2.3",
     "@types/d3": "^5.7.2",
+    "@types/webpack-env": "^1.14.0",
+    "babel-loader": "^8.0.6",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.1",
+    "ts-loader": "^6.1.0",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
-    "@types/webpack-env": "^1.14.0",
-    "ts-loader": "^6.1.0",
     "typescript": "^3.6.3",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.6.3",
+    "@data-ui/event-flow": "0.0.81",
     "@jupyter-widgets/base": "^2.0.0",
     "@types/cytoscape": "^3.8.2",
     "@types/node": "^12.7.5",
@@ -49,7 +53,12 @@
     "cytoscape-popper": "^1.0.4",
     "d3": "^5.11.0",
     "lodash": "^4.17.4",
-    "tippy.js": "^4.3.5"
+    "tippy.js": "^4.3.5",
+    "@types/react-dom": "^16.9.2",
+    "@vx/responsive": "0.0.192",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   },
   "jupyterlab": {
     "extension": "lib/labplugin"

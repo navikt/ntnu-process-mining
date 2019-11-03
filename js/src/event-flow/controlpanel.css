@@ -1,0 +1,269 @@
+
+.content{
+    background-color: #323232;
+    border-radius: 10px;
+}
+
+h1{
+    text-align: center;
+    color: whitesmoke;
+    font-weight: bolder;
+    margin-top: 1%;
+}
+
+.Select-control input{
+    display: none !important;
+}
+
+.Select-control{
+    user-select: text;
+    font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 12px !important;
+    -webkit-box-direction: normal !important;
+    font-weight: 700 !important;
+    background-color: #fff;
+    border-color: #d9d9d9 #ccc #b3b3b3;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    color: #333;
+    cursor: default;
+    display: table;
+    border-spacing: 0;
+    border-collapse: separate;
+    height: 36px;
+    outline: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+.Select-multi-value-wrapper{
+    user-select: text;
+    font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 12px !important;
+    -webkit-box-direction: normal !important;
+    font-weight: 700 !important;color: #333;
+    cursor: default;border-spacing: 0;
+    border-collapse: separate;
+    box-sizing: border-box;
+}
+.Select-value{
+    user-select: text;
+    font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 12px !important;-webkit-box-direction: normal !important;
+    font-weight: 700 !important;cursor: default;border-spacing: 0;
+    border-collapse: separate;
+    box-sizing: border-box;
+    bottom: 0;
+    color: #aaa;
+    left: 0;
+    line-height: 34px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.Select-input{
+    user-select: text;
+    font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 12px !important;
+    -webkit-box-direction: normal !important;
+    font-weight: 700 !important;
+    color: #333;
+    cursor: default;
+    border-spacing: 0;
+    border-collapse: separate;
+    height: 34px;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    display: none;
+}
+.Select-arrow-zone{
+    user-select: text;
+    font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 12px !important;
+    -webkit-box-direction: normal !important;
+    font-weight: 700 !important;
+    color: #333;
+    border-spacing: 0;
+    border-collapse: separate;
+    cursor: pointer;
+    display: table-cell;
+    position: relative;
+    text-align: right;
+    vertical-align: middle;
+    width: 10vw;
+    box-sizing: border-box;
+    padding-right: 5px;
+}
+.Select-menu-outer{
+    user-select: text;
+    font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 12px !important;
+    -webkit-box-direction: normal !important;
+    font-weight: 700 !important;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top-color: #e6e6e6;
+    box-shadow: 0 1px 0 rgba(0,0,0,.06);
+    margin-top: -1px;
+    max-height: 200px;
+    left: 0;
+    top: 100%;
+    z-index: 2;
+    box-sizing: border-box;
+}
+.Select-menu{
+    user-select: text;
+    font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 12px !important;
+    -webkit-box-direction: normal !important;
+    font-weight: 700 !important;
+    max-height: 198px;
+    overflow-y: auto;
+    box-sizing: border-box;
+} 
+
+.Select-option-is-selected.is-focused{user-select: text;
+      font-family: BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+      font-size: 12px !important;
+      -webkit-box-direction: normal !important;
+      font-weight: 700 !important;
+      cursor: pointer;
+      display: block;
+      padding: 8px 10px;
+      box-sizing: border-box;
+      background-color: rgba(0,126,255,.08);
+      color: #333;
+  }
+
+.innerContainer_lqge4f{
+    display: grid;
+    grid-template-columns: 30% 65% !important;
+    grid-column-gap: 5%;
+}
+
+._lqge4f div{
+    margin:1%;
+    height: 35vh;
+}
+
+.header_dmn8hc {
+    width: 82%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .header_dmn8hc {
+        width: fit-content;
+    }
+  }
+
+.innerContainer_lqge4f{
+    height: 400px !important;
+}
+
+.vx-legend{
+    height: 25vh;
+    overflow-y:auto;
+}
+
+.innerContainer_lqge4f{
+    padding: 1%;
+    padding-right: 2%;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    margin-left: 15px;
+}
+
+
+.flexColumn_wgmchy-o_O-padBottom_1ouw2w0{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.Select-value input{
+    display: none !important;
+}
+
+.padBottom_1ouw2w0{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+}
+
+.flexColumn_wgmchy-o_O-padBottom_1ouw2w0{
+    grid-column-start: 2;
+    grid-column-end: 2;
+}
+
+.sortNodes{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+.alignSequence{
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.x-axis{
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+.hideNodes{
+    grid-row-start: 4;
+    grid-row-end: 4;
+}
+
+.aligner{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+}
+
+.underSequence{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start:2;
+    grid-row-end: 2;
+}
+
+.underSequence div{
+    width: 25%;
+    margin: 0 !important;
+}
+
+.underSequence div div{
+    width: 100%;
+    margin: 0 !important;
+}
+
+.alignBySelect_tsc2sk{
+    float: right;
+    width: 70% !important;
+}
+
+._36rlri{
+    float: left;
+    padding-top: 9% !important;
+}
+
+.hideNodes div{
+    padding-top: 0 !important;
+}

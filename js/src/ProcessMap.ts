@@ -155,6 +155,7 @@ export class ProcessMap extends DOMWidgetView {
     this.cy = cytoscape({
       container: this.element,
       elements: this.getElements(),
+      // @ts-ignore
       style: this.getStylesheet(),
       layout: this.getLayout()
     });
@@ -240,7 +241,6 @@ export class ProcessMap extends DOMWidgetView {
           width: 'label',
           height: 'label',
           shape: 'round-rectangle',
-          // @ts-ignore
           padding: '10px',
           'background-color': n => {
             if (n.id() === this.startNodeID || n.id() === this.endNodeID) {
