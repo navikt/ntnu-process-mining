@@ -158,7 +158,7 @@ setup_args = {
         ),
         ("etc/jupyter/nbconfig/notebook.d", ["ntnu-process-mining.json"]),
     ],
-    "install_requires": ["ipywidgets>=7.0.0"],
+    "install_requires": ["ipywidgets>=7.0.0", "pandas>=0.25.1", "pm4py>=1.1.27"],
     "packages": find_packages(),
     "zip_safe": False,
     "cmdclass": {
