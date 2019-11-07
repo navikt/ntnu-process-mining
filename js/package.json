@@ -44,7 +44,8 @@
     "@jupyter-widgets/base": "^2.0.0",
     "@types/node": "^12.7.5",
     "d3": "^5.11.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "sortablejs": "^1.10.1"
   },
   "jupyterlab": {
     "extension": "lib/labplugin"
