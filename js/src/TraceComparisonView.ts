@@ -64,6 +64,27 @@ export class TraceComparisonView extends DOMWidgetView {
       this.model.save_changes();
     };
 
+    let resultList = document.createElement('ul');
+
+    let resultChanged = function() {
+      resultList.innerHTML = '';
+      for (const [key, value] of Object.entries(this.model.get('result'))) {
+        const resultElement = document.createElement('li');
+        resultElement.style.whiteSpace = 'pre';
+        let formattedList = key
+          .toString()
+          .replace('(', '')
+          .replace(')', '')
+          .trim();
+        console.log(formattedList);
+        resultElement.textContent =
+          'Count: ' + value.toString().padEnd(5, ' ') + formattedList;
+        resultList.appendChild(resultElement);
+      }
+    };
+
+    this.model.on('change:result', resultChanged, this);
+
     traceList.addEventListener('change', changed.bind(this));
     let header1 = document.createElement('header');
     header1.textContent = 'Available activities';
@@ -73,33 +94,8 @@ export class TraceComparisonView extends DOMWidgetView {
     traceBuilder.appendChild(header2);
     traceBuilder.appendChild(activitiesList);
     traceBuilder.appendChild(traceList);
+    traceBuilder.appendChild(resultList);
     this.el.appendChild(traceBuilder);
-
-    let table = document.createElement('tbody');
-
-    let resultChanged = function() {
-      table.innerHTML = '';
-      for (const [key, value] of Object.entries(this.model.get('result'))) {
-        let tr = '<tr>';
-
-        /* Must not forget the $ sign */
-        tr +=
-          '<td> Count: ' +
-          value.toString() +
-          ' &nbsp; </td>' +
-          '<td> Trace: ' +
-          key +
-          '</td></tr>';
-
-        /* We add the table row to the table body */
-        table.innerHTML += tr;
-      }
-
-      table.setAttribute('width', '100%');
-    };
-
-    this.model.on('change:result', resultChanged, this);
-    this.el.appendChild(table);
 
     // Styling
     traceBuilder.style.display = 'grid';
@@ -116,5 +112,8 @@ export class TraceComparisonView extends DOMWidgetView {
     traceList.style.border = '2px solid red';
     traceList.style.width = '45%';
     traceList.style.listStyle = 'none';
+    resultList.style.gridColumn = '1/-1';
+    resultList.style.border = '2px solid red';
+    resultList.style.listStyle = 'none';
   }
 }
