@@ -22,7 +22,7 @@ class EventFlow(widgets.Widget):
             events.append({
                 "ENTITY_ID": row['case_id'],
                 "TS": row['timestamp'],
-                "EVENT_NAME": f"{row['activity']}-{row['lifecycle']}"
+                "EVENT_NAME": row['activity']
             })
         self.value = events
 
