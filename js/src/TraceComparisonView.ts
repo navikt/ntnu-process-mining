@@ -65,6 +65,12 @@ export class TraceComparisonView extends DOMWidgetView {
     };
 
     traceList.addEventListener('change', changed.bind(this));
+    let header1 = document.createElement('header');
+    header1.textContent = 'Available activities';
+    let header2 = document.createElement('header');
+    header2.textContent = 'Build the trace';
+    traceBuilder.appendChild(header1);
+    traceBuilder.appendChild(header2);
     traceBuilder.appendChild(activitiesList);
     traceBuilder.appendChild(traceList);
     this.el.appendChild(traceBuilder);
@@ -98,6 +104,12 @@ export class TraceComparisonView extends DOMWidgetView {
     // Styling
     traceBuilder.style.display = 'grid';
     traceBuilder.style.gridTemplateColumns = '1fr 1fr';
+    traceBuilder.style.gridTemplateRows = '0.1fr 1fr';
+    traceBuilder.style.justifyItems = 'center';
+
+    header1.style.fontWeight = 'bold';
+    header2.style.fontWeight = 'bold';
+
     activitiesList.style.border = '2px solid red';
     activitiesList.style.listStyle = 'none';
     activitiesList.style.width = '45%';
