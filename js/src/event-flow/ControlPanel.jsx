@@ -61,13 +61,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontColor: '#767676',
     width: 'auto',
-    padding: `${0}px ${padding}px`,
+    padding: `0px ${padding}px`,
     background: '#fff'
   },
 
   innerContainer: {
     overflowY: 'auto',
-    height: 'inherit'
+    height: 'inherit',
+    display: 'grid',
+    gridTemplateColumns: '30% 65% !important',
+    gridColumnGap: '5%',
+    height: '400px !important',
+    padding: '1%',
+    paddingRight: '2%',
+    borderRadius: '10px',
+    backgroundColor: '#f5f5f5',
+    marginLeft: '15px'
   },
 
   flexRow: {
@@ -82,21 +91,30 @@ const styles = StyleSheet.create({
   },
 
   alignBySelect: {
-    paddingLeft: Number(0),
+    paddingLeft: 0,
     fontWeight: 700,
     flexGrow: 1,
-    paddingLeft: 0
+    paddingLeft: 0,
+    float: 'right',
+    width: '70% !important'
   },
 
   header: {
     position: 'absolute',
     top: 0,
     right: '100%',
-    textAlign: 'right'
+    textAlign: 'right',
+    width: '82%'
   },
 
   padBottom: {
-    paddingBottom: padding
+    paddingBottom: padding,
+    gridColumnStart: 1,
+    gridColumnEnd: 1,
+    gridRowStart: 1,
+    gridRowEnd: 1,
+    display: 'grid',
+    gridTemplateRows: 'auto auto auto auto'
   },
 
   option: {
