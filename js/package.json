@@ -58,7 +58,8 @@
     "@vx/responsive": "0.0.192",
     "babel-preset-react": "^6.24.1",
     "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "react-dom": "^16.10.2",
+    "sortablejs": "^1.10.1"
   },
   "jupyterlab": {
     "extension": "lib/labplugin"
