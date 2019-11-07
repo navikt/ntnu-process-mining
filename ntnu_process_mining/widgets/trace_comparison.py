@@ -37,6 +37,7 @@ class TraceComparison(widgets.DOMWidget):
         ])
         self.observe(self.on_trace_change, names="trace")
         self.activities = self.event_log[self.activity_field].unique().tolist()
+        self.on_trace_change()
 
     def on_trace_change(self, change={}):
         result = _find_similar_traces(
