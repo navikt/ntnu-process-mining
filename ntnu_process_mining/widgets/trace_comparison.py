@@ -20,11 +20,12 @@ class TraceComparison(widgets.DOMWidget):
     trace = List([]).tag(sync=True)
 
     def __init__(
-            self,
-            df,
-            timestamp_field='timestamp',
-            case_id_field='case_id',
-            activity_field='activity'):
+        self,
+        df,
+        timestamp_field="timestamp",
+        case_id_field="case_id",
+        activity_field="activity",
+    ):
 
         super(TraceComparison, self).__init__()
 
@@ -32,9 +33,9 @@ class TraceComparison(widgets.DOMWidget):
         self.case_id_field = case_id_field
         self.activity_field = activity_field
 
-        self.event_log = csv_import_adapter.convert_timestamp_columns_in_df(df, timest_columns=[
-            timestamp_field
-        ])
+        self.event_log = csv_import_adapter.convert_timestamp_columns_in_df(
+            df, timest_columns=[timestamp_field]
+        )
         self.observe(self.on_trace_change, names="trace")
         self.activities = self.event_log[self.activity_field].unique().tolist()
         self.on_trace_change()
@@ -46,7 +47,7 @@ class TraceComparison(widgets.DOMWidget):
             top_n=5,
             timestamp_field=self.timestamp_field,
             case_id_field=self.case_id_field,
-            activity_field=self.activity_field
+            activity_field=self.activity_field,
         )
         self.result = result
 
@@ -80,8 +81,10 @@ def _compare_traces(embedded_log, comparison_trace, top_n):
 
 
 def _embed_traces(log, trace, timestamp_field, case_id_field, activity_field):
-    unique_traces = convert_to_traces(log, timestamp_field, case_id_field, activity_field)
-    activies = log['activity'].unique()
+    unique_traces = convert_to_traces(
+        log, timestamp_field, case_id_field, activity_field
+    )
+    activies = log["activity"].unique()
     embedding = {}
     for i, activity in enumerate(activies):
         embedding[activity] = i
@@ -97,8 +100,12 @@ def _embed_traces(log, trace, timestamp_field, case_id_field, activity_field):
     return embedded_log, embedded_trace, inverse_embedding
 
 
-def _find_similar_traces(log, trace, top_n, timestamp_field, case_id_field, activity_field):
-    embedded_log, embedded_trace, inverse_embedding = _embed_traces(log, trace, timestamp_field, case_id_field, activity_field)
+def _find_similar_traces(
+    log, trace, top_n, timestamp_field, case_id_field, activity_field
+):
+    embedded_log, embedded_trace, inverse_embedding = _embed_traces(
+        log, trace, timestamp_field, case_id_field, activity_field
+    )
     result = _compare_traces(embedded_log, embedded_trace, top_n)
     similar_traces = {}
     for k, v in result.items():

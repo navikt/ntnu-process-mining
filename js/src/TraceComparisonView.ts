@@ -32,7 +32,7 @@ export class TraceComparisonView extends DOMWidgetView {
         name: 'same'
       },
       animation: 150,
-      onAdd: function(event) {
+      onAdd(event) {
         const option = event.item;
         const button = document.createElement('button');
         const clicked = function(item) {
@@ -44,7 +44,7 @@ export class TraceComparisonView extends DOMWidgetView {
         option.insertBefore(button, option.firstChild);
         event.item.replaceWith(option);
       },
-      onSort: function(event) {
+      onSort() {
         this.el.dispatchEvent(new Event('change', { bubbles: true }));
       }
     });
