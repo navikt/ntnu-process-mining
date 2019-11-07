@@ -31,16 +31,15 @@ class ProcessMap(widgets.DOMWidget):
 
         super(ProcessMap, self).__init__()
 
+        self.timestamp_field = timestamp_field
+        self.case_id_field = case_id_field
+        self.activity_field = activity_field
         self.df = csv_import_adapter.convert_timestamp_columns_in_df(df, timest_columns=[
             timestamp_field
         ])
         self.cases = self.df.groupby(case_id_field)
         self.activities = self.cases.agg({activity_field: lambda x: ''.join(x)}).groupby(activity_field)
         self.sorted_activities = self.activities.size().sort_values(ascending=False)
-
-        self.timestamp_field = timestamp_field
-        self.case_id_field = case_id_field
-        self.activity_field = activity_field
 
         self.observe(self.on_filter_change, names='filter')
         self.on_filter_change()

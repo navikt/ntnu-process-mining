@@ -2,6 +2,7 @@ import ipywidgets as widgets
 from traitlets import Unicode, Dict, List
 import collections
 import itertools
+from pm4py.objects.log.adapters.pandas import csv_import_adapter
 from ntnu_process_mining.utils.events_to_traces import convert_to_traces
 
 
@@ -18,13 +19,34 @@ class TraceComparison(widgets.DOMWidget):
     activities = List([]).tag(sync=True)
     trace = List([]).tag(sync=True)
 
-    def set_log(self, event_log):
-        self.event_log = event_log
+    def __init__(
+            self,
+            df,
+            timestamp_field='timestamp',
+            case_id_field='case_id',
+            activity_field='activity'):
+
+        super(TraceComparison, self).__init__()
+
+        self.timestamp_field = timestamp_field
+        self.case_id_field = case_id_field
+        self.activity_field = activity_field
+
+        self.event_log = csv_import_adapter.convert_timestamp_columns_in_df(df, timest_columns=[
+            timestamp_field
+        ])
         self.observe(self.on_trace_change, names="trace")
-        self.activities = self.event_log.activity.unique().tolist()
+        self.activities = self.event_log[self.activity_field].unique().tolist()
 
     def on_trace_change(self, change={}):
-        result = _find_similar_traces(self.event_log, self.trace, top_n=5)
+        result = _find_similar_traces(
+            self.event_log,
+            self.trace,
+            top_n=5,
+            timestamp_field=self.timestamp_field,
+            case_id_field=self.case_id_field,
+            activity_field=self.activity_field
+        )
         self.result = result
 
 
@@ -56,9 +78,9 @@ def _compare_traces(embedded_log, comparison_trace, top_n):
     return dict(itertools.islice(sorted_traces.items(), top_n))
 
 
-def _embed_traces(log, trace):
-    unique_traces = convert_to_traces(log)
-    activies = log.activity.unique()
+def _embed_traces(log, trace, timestamp_field, case_id_field, activity_field):
+    unique_traces = convert_to_traces(log, timestamp_field, case_id_field, activity_field)
+    activies = log['activity'].unique()
     embedding = {}
     for i, activity in enumerate(activies):
         embedding[activity] = i
@@ -74,8 +96,8 @@ def _embed_traces(log, trace):
     return embedded_log, embedded_trace, inverse_embedding
 
 
-def _find_similar_traces(log, trace, top_n):
-    embedded_log, embedded_trace, inverse_embedding = _embed_traces(log, trace)
+def _find_similar_traces(log, trace, top_n, timestamp_field, case_id_field, activity_field):
+    embedded_log, embedded_trace, inverse_embedding = _embed_traces(log, trace, timestamp_field, case_id_field, activity_field)
     result = _compare_traces(embedded_log, embedded_trace, top_n)
     similar_traces = {}
     for k, v in result.items():

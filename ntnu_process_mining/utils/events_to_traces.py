@@ -1,19 +1,10 @@
-from pandas import read_csv
-import pandas as pd
 
-
-def read_event_log(path):
-    log = read_csv(path)
-    log["timestamp"] = pd.to_datetime(log.timestamp)
-    return log
-
-
-def convert_to_traces(event_log):
-    event_log = event_log.groupby("case_id", group_keys=False).apply(
-        lambda x: x.sort_values(("timestamp"))
+def convert_to_traces(event_log, timestamp_field, case_id_field, activity_field):
+    event_log = event_log.groupby(case_id_field, group_keys=False).apply(
+        lambda x: x.sort_values(timestamp_field)
     )
 
-    traces = event_log.groupby("case_id")["activity"].agg(list)
+    traces = event_log.groupby(case_id_field)[activity_field].agg(list)
 
     traces_dict = {}
 
