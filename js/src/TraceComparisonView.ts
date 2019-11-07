@@ -33,9 +33,9 @@ export class TraceComparisonView extends DOMWidgetView {
       },
       animation: 150,
       onAdd: function(event) {
-        let option = event.item;
-        let button = document.createElement('button');
-        let clicked = function(item) {
+        const option = event.item;
+        const button = document.createElement('button');
+        const clicked = function(item) {
           item.parentNode.removeChild(item);
           this.el.dispatchEvent(new Event('change'));
         };
@@ -49,14 +49,14 @@ export class TraceComparisonView extends DOMWidgetView {
       }
     });
 
-    let changed = function() {
+    const changed = function() {
       // Convert HTML li elements to javascript array
-      let selectedActivities = traceList.getElementsByTagName('li');
-      let newTrace = [];
+      const selectedActivities = traceList.getElementsByTagName('li');
+      const newTrace = [];
       for (const activity of selectedActivities) {
         // Remove button tag
-        let regex = /<button.*?<\/button>/gi;
-        let result = activity.innerHTML.replace(regex, '');
+        const regex = /<button.*?<\/button>/gi;
+        const result = activity.innerHTML.replace(regex, '');
         newTrace.push(result);
       }
 
@@ -64,19 +64,18 @@ export class TraceComparisonView extends DOMWidgetView {
       this.model.save_changes();
     };
 
-    let resultList = document.createElement('ul');
+    const resultList = document.createElement('ul');
 
-    let resultChanged = function() {
+    const resultChanged = function() {
       resultList.innerHTML = '';
       for (const [key, value] of Object.entries(this.model.get('result'))) {
         const resultElement = document.createElement('li');
         resultElement.style.whiteSpace = 'pre';
-        let formattedList = key
+        const formattedList = key
           .toString()
           .replace('(', '')
           .replace(')', '')
           .trim();
-        console.log(formattedList);
         resultElement.textContent =
           'Count: ' + value.toString().padEnd(5, ' ') + formattedList;
         resultList.appendChild(resultElement);
@@ -86,10 +85,10 @@ export class TraceComparisonView extends DOMWidgetView {
     this.model.on('change:result', resultChanged, this);
 
     traceList.addEventListener('change', changed.bind(this));
-    let header1 = document.createElement('header');
+    const header1 = document.createElement('header');
     header1.textContent = 'Available activities';
-    let header2 = document.createElement('header');
-    header2.textContent = 'Build the trace';
+    const header2 = document.createElement('header');
+    header2.textContent = 'Build the trace (drag and drop)';
     traceBuilder.appendChild(header1);
     traceBuilder.appendChild(header2);
     traceBuilder.appendChild(activitiesList);
