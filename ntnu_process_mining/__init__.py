@@ -4,6 +4,7 @@ from .widgets.process_map import *
 from .widgets.event_flow import *
 from .widgets.trace_comparison import *
 
+
 def _jupyter_nbextension_paths():
     return [
         {

@@ -1,4 +1,3 @@
-
 def convert_to_traces(event_log, timestamp_field, case_id_field, activity_field):
     event_log = event_log.groupby(case_id_field, group_keys=False).apply(
         lambda x: x.sort_values(timestamp_field)
