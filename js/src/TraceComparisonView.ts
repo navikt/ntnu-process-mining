@@ -5,6 +5,7 @@ export class TraceComparisonView extends DOMWidgetView {
   public render() {
     const activities = this.model.get('activities');
 
+    const traceBuilder = document.createElement('div');
     const activitiesList = document.createElement('ul');
 
     // Create the list of all available activities
@@ -40,7 +41,7 @@ export class TraceComparisonView extends DOMWidgetView {
         };
         button.textContent = 'X';
         button.onclick = clicked.bind(this, event.item);
-        option.appendChild(button);
+        option.insertBefore(button, option.firstChild);
         event.item.replaceWith(option);
       },
       onSort: function(event) {
@@ -64,8 +65,9 @@ export class TraceComparisonView extends DOMWidgetView {
     };
 
     traceList.addEventListener('change', changed.bind(this));
-    this.el.appendChild(activitiesList);
-    this.el.appendChild(traceList);
+    traceBuilder.appendChild(activitiesList);
+    traceBuilder.appendChild(traceList);
+    this.el.appendChild(traceBuilder);
 
     let table = document.createElement('tbody');
 
@@ -92,5 +94,15 @@ export class TraceComparisonView extends DOMWidgetView {
 
     this.model.on('change:result', resultChanged, this);
     this.el.appendChild(table);
+
+    // Styling
+    traceBuilder.style.display = 'grid';
+    traceBuilder.style.gridTemplateColumns = '1fr 1fr';
+    activitiesList.style.border = '2px solid red';
+    activitiesList.style.listStyle = 'none';
+    activitiesList.style.width = '45%';
+    traceList.style.border = '2px solid red';
+    traceList.style.width = '45%';
+    traceList.style.listStyle = 'none';
   }
 }
