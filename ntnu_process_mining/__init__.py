@@ -1,7 +1,7 @@
 from ._version import version_info, __version__
 
 from .widgets.process_map import *
-from .widgets.event_flow import *
+from .widgets.trace_explorer import *
 from .widgets.trace_comparison import *
 
 

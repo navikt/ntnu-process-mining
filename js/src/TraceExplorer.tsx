@@ -1,9 +1,11 @@
 import { DOMWidgetView } from '@jupyter-widgets/base';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import EventFlowComponent, { IEvent } from './event-flow/EventFlowComponent';
+import EventFlowComponent, {
+  IEvent
+} from './trace-explorer/EventFlowComponent';
 
-export class EventFlow extends DOMWidgetView {
+export class TraceExplorer extends DOMWidgetView {
   private element: HTMLElement;
 
   public initialize() {

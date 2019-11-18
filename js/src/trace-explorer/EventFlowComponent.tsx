@@ -17,7 +17,7 @@ export interface IEvent {
 const EventFlowComponent: React.FC<{ events: IEvent[] }> = ({ events }) => {
   return (
     <div className="content">
-      <h1>Event Flow</h1>
+      <h1>Trace Explorer</h1>
       <ResponsiveVis data={events} />
     </div>
   );

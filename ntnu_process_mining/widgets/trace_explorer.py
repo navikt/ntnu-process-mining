@@ -4,13 +4,13 @@ from pm4py.objects.log.adapters.pandas import csv_import_adapter
 
 
 @widgets.register
-class EventFlow(widgets.Widget):
-    """Event flow widget."""
+class TraceExplorer(widgets.Widget):
+    """Trace explorer widget."""
 
     _model_module = Unicode("ntnu-process-mining").tag(sync=True)
     _view_module = Unicode("ntnu-process-mining").tag(sync=True)
-    _view_name = Unicode("EventFlow").tag(sync=True)
-    _model_name = Unicode("EventFlowModel").tag(sync=True)
+    _view_name = Unicode("TraceExplorer").tag(sync=True)
+    _model_name = Unicode("TraceExplorerModel").tag(sync=True)
     _view_module_version = Unicode("^0.1.0").tag(sync=True)
     _model_module_version = Unicode("^0.1.0").tag(sync=True)
     value = List(Dict, default_value=[]).tag(sync=True)
@@ -23,7 +23,7 @@ class EventFlow(widgets.Widget):
         activity_field="activity",
     ):
 
-        super(EventFlow, self).__init__()
+        super(TraceExplorer, self).__init__()
         self.df = csv_import_adapter.convert_timestamp_columns_in_df(
             df, timest_columns=[timestamp_field]
         )

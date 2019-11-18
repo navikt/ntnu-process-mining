@@ -1,7 +1,7 @@
 export * from './ProcessMap';
 export * from './ProcessMapModel';
-export * from './EventFlow';
-export * from './EventFlowModel';
+export * from './TraceExplorer';
+export * from './TraceExplorerModel';
 export * from './TraceComparisonView';
 export * from './TraceComparisonModel';
 
