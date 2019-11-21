@@ -187,7 +187,7 @@ h1 {
   font-weight: 700 !important;
   cursor: pointer;
   display: block;
-  padding: 8px;
+  padding: 8px 10px;
   box-sizing: border-box;
   color: #333;
 }
@@ -200,7 +200,7 @@ h1 {
   font-weight: 700 !important;
   cursor: pointer;
   display: block;
-  padding: 8px;
+  padding: 8px 10px;
   box-sizing: border-box;
   color: #333;
   background-color: rgba(0, 126, 255, 0.03);

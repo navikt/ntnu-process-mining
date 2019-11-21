@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     overflowY: 'auto',
     height: 'auto',
     display: 'grid',
-    gridTemplateColumns: '30% 65% !important',
+    gridTemplateColumns: '40% 55% !important',
     gridColumnGap: '5%',
     padding: '1%',
     paddingRight: '2%',
