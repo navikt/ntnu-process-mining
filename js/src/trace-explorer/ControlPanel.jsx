@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     flexGrow: 1,
     float: 'right',
-    width: '70% !important'
+    width: '60% !important'
   },
 
   header: {
