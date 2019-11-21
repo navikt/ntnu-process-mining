@@ -47,6 +47,7 @@ h1 {
   border-spacing: 0;
   border-collapse: separate;
   box-sizing: border-box;
+  width: 0;
 }
 .Select-value {
   user-select: text;
@@ -102,7 +103,7 @@ h1 {
   position: relative;
   text-align: right;
   vertical-align: middle;
-  width: 10vw;
+  width: 100%;
   box-sizing: border-box;
   padding-right: 5px;
 }
