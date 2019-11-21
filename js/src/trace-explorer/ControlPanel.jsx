@@ -67,11 +67,10 @@ const styles = StyleSheet.create({
 
   innerContainer: {
     overflowY: 'auto',
-    height: 'inherit',
+    height: 'auto',
     display: 'grid',
     gridTemplateColumns: '30% 65% !important',
     gridColumnGap: '5%',
-    height: '400px !important',
     padding: '1%',
     paddingRight: '2%',
     borderRadius: '10px',
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     fontWeight: 700,
     flexGrow: 1,
-    paddingLeft: 0,
     float: 'right',
     width: '70% !important'
   },

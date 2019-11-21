@@ -1,10 +1,10 @@
-import { withScreenSize } from '@vx/responsive';
+import { withParentSize } from '@vx/responsive';
 import React from 'react';
 import { default as App } from './App';
 
-const ResponsiveVis = withScreenSize(
-  ({ screenWidth, screenHeight, ...rest }) => (
-    <App width={985.469} height={900} initialMinEventCount={2} {...rest} />
+const ResponsiveVis = withParentSize(
+  ({ parentWidth, parentHeight, ...rest }) => (
+    <App width={parentWidth} height={900} initialMinEventCount={2} {...rest} />
   )
 );
 

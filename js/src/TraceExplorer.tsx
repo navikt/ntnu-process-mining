@@ -10,7 +10,7 @@ export class TraceExplorer extends DOMWidgetView {
 
   public initialize() {
     this.element = document.createElement('div') as HTMLElement;
-    this.element.style.width = '100%';
+    this.element.style.width = 'auto';
     this.element.style.height = '1400px';
     this.el.appendChild(this.element);
 
