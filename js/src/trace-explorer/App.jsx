@@ -26,7 +26,7 @@ SOFTWARE.
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ControlPanel, { width as CONTROLS_WIDTH } from './ControlPanel';
+import ControlPanel from './ControlPanel';
 import Visualization, {
   margin as VIS_MARGIN
 } from '@data-ui/event-flow/src/components/Visualization';
@@ -83,7 +83,7 @@ class App extends React.PureComponent {
       initialMinEventCount: minEventCount
     } = props;
 
-    const visualizationWidth = this.getVisualizationWidth(width, showControls);
+    const visualizationWidth = width;
     const alignByEventType = ANY_EVENT_TYPE;
     const alignByIndex = 1;
     const hiddenEventTypes = {};
@@ -129,11 +129,8 @@ class App extends React.PureComponent {
       this.props.height !== nextProps.height ||
       nextState.graph
     ) {
-      const { showControls, graph, scales: prevScales } = this.state;
-      nextState.visualizationWidth = this.getVisualizationWidth(
-        nextProps.width,
-        showControls
-      );
+      const { graph, scales: prevScales } = this.state;
+      nextState.visualizationWidth = this.state.visualizationWidth;
       nextState.scales = this.getScales(
         nextState.graph || graph,
         nextState.visualizationWidth,
@@ -148,10 +145,6 @@ class App extends React.PureComponent {
       nextState.selectedNode = null;
       this.setState(nextState);
     }
-  }
-
-  getVisualizationWidth(width, showControls) {
-    return width - (showControls ? CONTROLS_WIDTH + VIS_MARGIN.right : 0);
   }
 
   getGraph({
@@ -188,10 +181,10 @@ class App extends React.PureComponent {
   }
 
   handleToggleShowControls() {
-    const { width, height } = this.props;
+    const { height } = this.props;
     const { showControls: prevShowControls, graph } = this.state;
     const showControls = !prevShowControls;
-    const visualizationWidth = this.getVisualizationWidth(width, showControls);
+    const visualizationWidth = this.state.visualizationWidth;
 
     this.setState({
       visualizationWidth,

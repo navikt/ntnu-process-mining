@@ -23,7 +23,7 @@ h1 {
   background-color: #fff;
   border-color: #d9d9d9 #ccc #b3b3b3;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid;
   color: #333;
   cursor: default;
   display: table;
@@ -47,6 +47,7 @@ h1 {
   border-spacing: 0;
   border-collapse: separate;
   box-sizing: border-box;
+  width: 0;
 }
 .Select-value {
   user-select: text;
@@ -64,7 +65,7 @@ h1 {
   line-height: 34px;
   padding-left: 10px;
   padding-right: 10px;
-  position: absolute;
+  position: absolute !important;
   right: 0;
   top: 0;
   overflow: hidden;
@@ -102,7 +103,7 @@ h1 {
   position: relative;
   text-align: right;
   vertical-align: middle;
-  width: 10vw;
+  width: 100%;
   box-sizing: border-box;
   padding-right: 5px;
 }
@@ -148,6 +149,61 @@ h1 {
   box-sizing: border-box;
   background-color: rgba(0, 126, 255, 0.08);
   color: #333;
+}
+
+.Select-option.is-focused {
+  user-select: text;
+  font-family: BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  font-size: 12px !important;
+  -webkit-box-direction: normal !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  background-color: rgba(0, 126, 255, 0.08);
+  color: #333;
+}
+
+.Select-option.is-selected.is-focused {
+  user-select: text;
+  font-family: BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  font-size: 12px !important;
+  -webkit-box-direction: normal !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  background-color: rgba(0, 126, 255, 0.08);
+  color: #333;
+}
+
+.Select-option {
+  user-select: text;
+  font-family: BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  font-size: 12px !important;
+  -webkit-box-direction: normal !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  color: #333;
+}
+
+.Select-option.is-selected {
+  user-select: text;
+  font-family: BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  font-size: 12px !important;
+  -webkit-box-direction: normal !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  color: #333;
+  background-color: rgba(0, 126, 255, 0.03);
 }
 
 .vx-legend {
